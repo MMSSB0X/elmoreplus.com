@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-        <script src="main.js"></script>
+    <script src="main.js"></script>
     <script type="module" src="profile-edit.js"></script>
     <script type="module" src="load.js"></script>
 </head>
@@ -22,11 +22,8 @@
         <div class="header-content">
             <div class="logo-area">
                 <div class="logo-icon">
-                        <!-- <i class="ph-fill ph-hexagon"></i> -->
-                                                 <a href="index.html">
-                        <img src="images/elmore-plus.png" class="logo-img" alt=""></a>
+                    <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt=""></a>
                 </div>
-                <!-- <h1>ELMOREPLUS</h1> -->
             </div>
             <nav class="main-nav">
                 <a href="index.html">HOME</a>
@@ -53,7 +50,6 @@
     </div>
 
     <div class="container layout-grid">
-        
         <aside class="left-sidebar profile-side-nav">
             <div class="side-nav-item">
                 <i class="ri-arrow-go-back-fill" style="color: var(--nav-blue-dark);"></i>
@@ -76,6 +72,11 @@
                         </div>
                         <label for="edit-pic" style="font-size: 0.8rem; color: #666;">OR Paste a Direct Link (Imgur, Discord, or Google Drive)</label>
                         <input type="text" id="edit-pic" placeholder="Paste link here...">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-username">Name</label>
+                        <input type="text" id="edit-username" placeholder="e.g., Gumball Watterson" required>
                     </div>
 
                     <div class="input-group">
@@ -130,7 +131,5 @@
             <div class="avatar-grid" id="avatar-grid"></div>
         </div>
     </div>
-
-
 </body>
 </html>
