@@ -77,8 +77,8 @@
 // friends.js - Multi-Page Controller for Elmore Plus Connections
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-import { collection, getDocs, doc, getDoc, query, orderBy, where, updateDoc, arrayUnion, deleteDoc, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
+// import { collection, getDocs, doc, getDoc, query, orderBy, where, updateDoc, arrayUnion, deleteDoc, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { collection, getDocs, doc, getDoc, query, orderBy, where, updateDoc, arrayUnion, deleteDoc, limit, onSnapshot, documentId } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 let currentUserUid = null;
 let userData = null;
 
@@ -139,7 +139,8 @@ async function loadMyFriends() {
     
     // Fetch up to 10 friends at a time (Firestore limits 'in' queries to 10)
     const chunk = myFriendsIds.slice(0, 10);
-    const q = query(collection(db, "users"), where("__name__", "in", chunk));
+    // const q = query(collection(db, "users"), where("__name__", "in", chunk));
+    const q = query(collection(db, "users"), where(documentId(), "in", chunk));
     const snapshot = await getDocs(q);
 
     snapshot.forEach((docSnap) => {

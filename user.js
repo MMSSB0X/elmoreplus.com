@@ -1,7 +1,7 @@
 // user.js - Handles visiting other citizens' profiles
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-import { doc, getDoc, collection, query, where, onSnapshot, updateDoc, arrayUnion, arrayRemove, serverTimestamp, addDoc, limit, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { doc, getDoc, collection, query, where, onSnapshot, updateDoc, arrayUnion, arrayRemove, serverTimestamp, addDoc, limit, getDocs, documentId } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 // IMPORT YOUR GLOBAL GOOGLE DRIVE FIX
 import { getDirectImageUrl } from "./gdrive.js";
@@ -15,9 +15,8 @@ if (!targetUid) {
 
 let currentUser = null;
 let targetUserData = null;
-let cleanTargetPic = null; // We will store the fixed Google Drive link here
+let cleanTargetPic = null; 
 
-// FORCE LOADER TO HIDE
 function hideLoader() {
     const loader = document.getElementById("site-loader");
     if (loader) {
@@ -36,25 +35,18 @@ onAuthStateChanged(auth, async (user) => {
         }
 
         try {
-            // Load your data for the sidebar
             const myDoc = await getDoc(doc(db, "users", currentUser.uid));
             if (myDoc.exists()) {
                 const myData = myDoc.data();
                 document.querySelectorAll(".display-username").forEach(el => el.textContent = myData.username);
-                // Fix your own sidebar image if it's a GDrive link!
                 const myCleanPic = getDirectImageUrl(myData.profilePic) || "https://placehold.co/150";
                 document.querySelectorAll(".display-pic").forEach(el => el.src = myCleanPic);
                 currentUser.displayName = myData.username;
                 currentUser.photoURL = myCleanPic;
             }
 
-            // Load Target User Data
             await loadTargetUser();
-            
-            // Check Friend Status
             await checkFriendStatus(); 
-
-            // Start loading their posts
             startTargetFeed();
             loadSidebarFriends();
 
@@ -74,8 +66,6 @@ async function loadTargetUser() {
     
     if (targetDoc.exists()) {
         targetUserData = targetDoc.data();
-        
-        // FIX: Clean their profile picture link using your GDrive tool!
         cleanTargetPic = getDirectImageUrl(targetUserData.profilePic) || "https://placehold.co/150";
         
         document.getElementById("target-profile-pic").src = cleanTargetPic;
@@ -189,7 +179,6 @@ function startTargetFeed() {
                 });
             }
 
-            // FIX: Use the LIVE target data instead of the old data saved in the post!
             const liveName = targetUserData.username;
             const liveBio = targetUserData.bio || "No bio yet.";
 
@@ -253,23 +242,44 @@ function attachLikeListeners() {
     });
 }
 
+// FIX: Safe Sidebar Loading
+// --- SIDEBAR: TARGET USER'S FRIENDS ---
 async function loadSidebarFriends() {
     const friendsGrid = document.querySelector(".friends-grid");
     if (!friendsGrid) return;
-    const q = query(collection(db, "users"), limit(6));
+    
+    // 1. Use the TARGET USER'S friends array, not the current user's!
+    const targetFriendsIds = targetUserData.friends || [];
+    friendsGrid.innerHTML = ""; // Clear the placeholders
+    
+    // 2. If THEY have no friends, show a little message
+    if (targetFriendsIds.length === 0) {
+        friendsGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #888; font-size: 0.85rem; padding: 10px 0;'>No friends yet.</p>";
+        return;
+    }
+    
+    // 3. Grab up to 6 of THEIR friends
+    const chunk = targetFriendsIds.slice(0, 6);
+    const q = query(collection(db, "users"), where(documentId(), "in", chunk));
     const snapshot = await getDocs(q);
-    friendsGrid.innerHTML = "";
+    
     snapshot.forEach((userDoc) => {
         const friend = userDoc.data();
-        if (friend.uid === currentUser.uid) return;
         
-        // Clean friend sidebar images too!
+        // Ensure the profile owner doesn't show up in their own sidebar
+        if (userDoc.id === targetUid) return; 
+
+        // Apply Google Drive Fix
         const cleanFriendPic = getDirectImageUrl(friend.profilePic) || "https://placehold.co/150";
-        
+
         const img = document.createElement("img");
         img.src = cleanFriendPic;
+        img.title = friend.username || "Citizen"; 
         img.style.cursor = "pointer";
+        
+        // If you click one of THEIR friends, it takes you to that friend's page!
         img.onclick = () => window.location.href = `user.html?uid=${userDoc.id}`;
+        
         friendsGrid.appendChild(img);
     });
 }

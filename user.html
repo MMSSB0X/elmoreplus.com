@@ -17,41 +17,49 @@
 <body>
 
     <div id="site-loader">
-        <img src="images/elmore-plus.png" class="loader-logo" alt="Elmore Plus">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
         <div class="spinner-circle"></div>
         <p class="loading-text">LOCATING CITIZEN...</p>
     </div>
 
-    <header class="top-bar nav-center">
-        <div class="header-content">
-            <div class="logo-area">
-                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
-            </div>
-            <nav class="main-nav">
-                <a href="index.html">HOME</a>
-                <a href="profile.html">MY ACCOUNT</a>
-                <a href="friends.html">FRIENDS</a>
-                
-                <div class="noti-wrapper" id="desktop-noti-wrapper">
-                    <a href="#" id="desktop-noti-btn" style="position: relative;">
-                        <i class="ri-notification-3-fill" style="font-size: 1.2rem; color: white;"></i>
-                        <span class="noti-badge hidden" id="desktop-noti-badge">0</span>
-                    </a>
-                    <div class="noti-dropdown hidden" id="desktop-noti-dropdown">
-                        <div class="noti-header">Notifications</div>
-                        <div id="desktop-noti-list"></div>
-                    </div>
-                </div>
-                
-                <a href="#" class="logout-btn">LOGOUT</a>
-            </nav>
+<header class="top-bar nav-center">
+    <div class="header-content">
+        <div class="logo-area">
+            <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="index.html" class="active">HOME</a>
+            <a href="profile.html">MY ACCOUNT</a>
+            <a href="friends.html">FRIENDS</a>
+            <a href="#" class="logout-btn">LOGOUT</a>
+        </nav>
+        
+        <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+            
             <div class="search-bar" style="position: relative;">
                 <label for="search-desktop">SEARCH</label>
-                <input type="text" id="search-desktop" autocomplete="off">
+                <input type="text" id="search-desktop" autocomplete="on" placeholder="Search Elmore...">
                 <div id="search-results-desktop" class="search-dropdown hidden"></div>
             </div>
+
+            <div class="noti-wrapper" id="header-noti-wrapper">
+                <a href="#" id="header-noti-btn" style="position: relative; color: white; font-size: 1.5rem; text-decoration: none;">
+                    <i class="ri-notification-3-fill"></i>
+                    <span class="noti-badge hidden" id="header-noti-badge">0</span>
+                </a>
+                
+                <div class="noti-dropdown hidden" id="header-noti-dropdown">
+                    <div class="noti-header">Notifications</div>
+                    <div id="header-noti-list">
+                        <p style="padding: 15px; color: #888; text-align: center; font-size: 0.8rem;">No new notifications</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </header>
+    </div>
+</header>
 
     <div class="mobile-search-dropdown" id="mobile-search-box">
         <div style="display: flex; width: 100%; gap: 10px;">
@@ -63,7 +71,7 @@
 
     <div class="container layout-grid">
         
-        <aside class="left-sidebar">
+        <!-- <aside class="left-sidebar">
             <div class="profile-card">
                 <h3 class="username display-username" id="display-username">Loading...</h3>
                 <div class="profile-pic">
@@ -73,8 +81,12 @@
                     <a href="profile.html">MY PROFILE</a>
                 </div>
             </div>
+        </aside> -->
+        <aside class="left-sidebar profile-side-nav">
+            <div class="side-nav-item"><i class="ri-message-2-fill" style="color: var(--primary-blue);"></i><span>Message</span></div>
+            <!-- <div class="side-nav-item"><i class="ri-image-fill" style="color: var(--accent-green);"></i><span>Photos</span></div>
+            <div class="side-nav-item"><i class="ri-video-fill" style="color: #f0ad4e;"></i><span>Videos</span></div> -->
         </aside>
-
         <main class="feed">
             
             <div class="profile-banner-card">

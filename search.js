@@ -45,7 +45,7 @@ async function performSearch(searchTerm, resultsContainer) {
             const userId = docSnap.id;
             
             const resultItem = document.createElement("a");
-            resultItem.href = `profile.html?uid=${userId}`; 
+            resultItem.href = `user.html?uid=${userId}`; 
             resultItem.className = "search-result-item";
             
             resultItem.innerHTML = `
