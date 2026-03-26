@@ -173,6 +173,12 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     margin-top: 10px; 
     margin-bottom: 20px;
+
+
+        /* NEW: Sticky Header Rules */
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Keeps it above posts, sidebars, and dropdowns */
 }
 
 .username {
