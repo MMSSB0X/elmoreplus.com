@@ -42,6 +42,10 @@ body {
     background: linear-gradient(to bottom, #7fc1ff, var(--primary-blue));
     border-bottom: 4px solid var(--nav-blue-dark);
     padding: 10px 0;
+        /* NEW: Sticky Header Rules */
+    position: sticky;
+    top: 0;
+    z-index: 1500; /* Keeps it above posts, sidebars, and dropdowns */
 }
 
 .header-content {
