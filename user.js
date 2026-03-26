@@ -2,7 +2,10 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import { doc, getDoc, collection, query, where, onSnapshot, updateDoc, arrayUnion, arrayRemove, serverTimestamp, addDoc, limit, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+// IMPORT YOUR GLOBAL GOOGLE DRIVE FIX
 import { getDirectImageUrl } from "./gdrive.js";
+
 const urlParams = new URLSearchParams(window.location.search);
 const targetUid = urlParams.get('uid');
 
@@ -12,6 +15,7 @@ if (!targetUid) {
 
 let currentUser = null;
 let targetUserData = null;
+let cleanTargetPic = null; // We will store the fixed Google Drive link here
 
 // FORCE LOADER TO HIDE
 function hideLoader() {
@@ -32,20 +36,25 @@ onAuthStateChanged(auth, async (user) => {
         }
 
         try {
+            // Load your data for the sidebar
             const myDoc = await getDoc(doc(db, "users", currentUser.uid));
             if (myDoc.exists()) {
                 const myData = myDoc.data();
                 document.querySelectorAll(".display-username").forEach(el => el.textContent = myData.username);
-                document.querySelectorAll(".display-pic").forEach(el => el.src = myData.profilePic);
+                // Fix your own sidebar image if it's a GDrive link!
+                const myCleanPic = getDirectImageUrl(myData.profilePic) || "https://placehold.co/150";
+                document.querySelectorAll(".display-pic").forEach(el => el.src = myCleanPic);
                 currentUser.displayName = myData.username;
-                currentUser.photoURL = myData.profilePic;
+                currentUser.photoURL = myCleanPic;
             }
 
+            // Load Target User Data
             await loadTargetUser();
             
-            // NEW: Check if you are friends and setup the Add Friend button!
+            // Check Friend Status
             await checkFriendStatus(); 
 
+            // Start loading their posts
             startTargetFeed();
             loadSidebarFriends();
 
@@ -65,8 +74,12 @@ async function loadTargetUser() {
     
     if (targetDoc.exists()) {
         targetUserData = targetDoc.data();
+        
+        // FIX: Clean their profile picture link using your GDrive tool!
+        cleanTargetPic = getDirectImageUrl(targetUserData.profilePic) || "https://placehold.co/150";
+        
+        document.getElementById("target-profile-pic").src = cleanTargetPic;
         document.getElementById("target-username").textContent = targetUserData.username;
-        document.getElementById("target-profile-pic").src = targetUserData.profilePic || "https://placehold.co/150";
         document.getElementById("target-bio").textContent = targetUserData.bio || "This citizen is a mystery.";
         document.getElementById("target-feed-title").textContent = `${targetUserData.username}'s Posts`;
         document.title = `${targetUserData.username} | Elmore Plus`;
@@ -76,12 +89,10 @@ async function loadTargetUser() {
     }
 }
 
-// --- NEW: FRIEND REQUEST LOGIC ---
 async function checkFriendStatus() {
     const addBtn = document.getElementById("add-friend-btn");
     if (!addBtn) return;
 
-    // 1. Are they already your friend?
     const myDoc = await getDoc(doc(db, "users", currentUser.uid));
     const myFriends = myDoc.data().friends || [];
     
@@ -92,7 +103,6 @@ async function checkFriendStatus() {
         return;
     }
 
-    // 2. Did you already send a request?
     const qSent = query(
         collection(db, "friendRequests"), 
         where("senderUid", "==", currentUser.uid), 
@@ -107,13 +117,11 @@ async function checkFriendStatus() {
         return;
     }
 
-    // 3. Setup Click to Send Request
     addBtn.onclick = async () => {
         addBtn.disabled = true;
         addBtn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Sending...`;
         
         try {
-            // Send Request to Database
             await addDoc(collection(db, "friendRequests"), {
                 senderUid: currentUser.uid,
                 receiverUid: targetUid,
@@ -123,7 +131,6 @@ async function checkFriendStatus() {
                 createdAt: serverTimestamp()
             });
             
-            // Send Notification to their Bell Icon
             await addDoc(collection(db, "notifications"), {
                 recipientUid: targetUid,
                 senderUid: currentUser.uid,
@@ -135,7 +142,6 @@ async function checkFriendStatus() {
                 createdAt: serverTimestamp()
             });
 
-            // Update UI
             addBtn.innerHTML = `<i class="ri-time-line"></i> Request Sent`;
             addBtn.style.background = "#888";
         } catch (error) {
@@ -183,14 +189,20 @@ function startTargetFeed() {
                 });
             }
 
+            // FIX: Use the LIVE target data instead of the old data saved in the post!
+            const liveName = targetUserData.username;
+            const liveBio = targetUserData.bio || "No bio yet.";
+
             const postDiv = document.createElement("div");
             postDiv.className = "post";
             postDiv.innerHTML = `
-                <img src="${post.authorPic}" class="post-avatar" onerror="this.src='https://placehold.co/150'">
+                <div class="avatar-wrapper" style="cursor: default;">
+                    <img src="${cleanTargetPic}" class="post-avatar" onerror="this.src='https://placehold.co/150'">
+                </div>
                 <div class="post-bubble">
                     <div class="post-header">
                         <div style="display: flex; flex-direction: column;">
-                            <strong>${post.author}</strong>
+                            <strong style="color: var(--nav-blue-dark);">${liveName}</strong>
                             <span style="font-size: 0.7rem; color: #888; margin-top: 3px;">${timeString}</span>
                         </div>
                     </div>
@@ -250,8 +262,13 @@ async function loadSidebarFriends() {
     snapshot.forEach((userDoc) => {
         const friend = userDoc.data();
         if (friend.uid === currentUser.uid) return;
+        
+        // Clean friend sidebar images too!
+        const cleanFriendPic = getDirectImageUrl(friend.profilePic) || "https://placehold.co/150";
+        
         const img = document.createElement("img");
-        img.src = friend.profilePic;
+        img.src = cleanFriendPic;
+        img.style.cursor = "pointer";
         img.onclick = () => window.location.href = `user.html?uid=${userDoc.id}`;
         friendsGrid.appendChild(img);
     });
