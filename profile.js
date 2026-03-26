@@ -2,7 +2,7 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
+import { getDirectImageUrl } from "./gdrive.js";
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         try {
