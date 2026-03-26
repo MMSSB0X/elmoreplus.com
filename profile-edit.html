@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Elmore Plus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+        <script src="main.js"></script>
+    <script type="module" src="profile-edit.js"></script>
+    <script type="module" src="load.js"></script>
+</head>
+<body>
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">CONNECTING TO ELMORE...</p>
+    </div>
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-icon">
+                        <!-- <i class="ph-fill ph-hexagon"></i> -->
+                                                 <a href="index.html">
+                        <img src="images/elmore-plus.png" class="logo-img" alt=""></a>
+                </div>
+                <!-- <h1>ELMOREPLUS</h1> -->
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html" class="active">MY ACCOUNT</a>
+                <a href="friends.html">FRIENDS</a>
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-search-dropdown" id="mobile-search-box">
+        <input type="text" placeholder="Search friends...">
+        <button><i class="ri-search-line"></i></button>
+    </div>
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+        <div class="mobile-menu-header">
+            <h2>MENU</h2>
+            <i class="ri-close-line mobile-menu-trigger" style="font-size: 1.5rem; color: white; cursor: pointer;"></i>
+        </div>
+        <a href="index.html">HOME</a>
+        <a href="profile.html">MY ACCOUNT</a>
+        <a href="friends.html">FRIENDS</a>
+        <a href="#" class="logout-btn" style="color: #ff4d4d;">LOGOUT</a>
+    </div>
+
+    <div class="container layout-grid">
+        
+        <aside class="left-sidebar profile-side-nav">
+            <div class="side-nav-item">
+                <i class="ri-arrow-go-back-fill" style="color: var(--nav-blue-dark);"></i>
+                <a href="profile.html" style="text-decoration: none; color: inherit; font-weight: bold;">Back to Profile</a>
+            </div>
+        </aside>
+
+        <main class="profile-main">
+            <div class="edit-profile-card">
+                <h2 style="color: var(--nav-blue-dark); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Edit Your Info</h2>
+                
+                <form id="edit-profile-form">
+                    
+                    <div class="input-group">
+                        <label>Profile Picture</label>
+                        <div style="margin-bottom: 15px;">
+                            <button type="button" id="open-avatar-modal" class="auth-btn" style="background-color: var(--accent-green); margin-top: 0; padding: 10px; width: auto;">
+                                <i class="ri-user-smile-fill"></i> Choose Elmore Avatar
+                            </button>
+                        </div>
+                        <label for="edit-pic" style="font-size: 0.8rem; color: #666;">OR Paste a Direct Link (Imgur, Discord, or Google Drive)</label>
+                        <input type="text" id="edit-pic" placeholder="Paste link here...">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-bio">Bio (Short tagline)</label>
+                        <textarea id="edit-bio" placeholder="e.g., Just trying to survive Elmore Junior High..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="edit-work">Work</label>
+                        <input type="text" id="edit-work" placeholder="e.g., Student at Elmore Junior High">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-hobbies">Hobbies</label>
+                        <input type="text" id="edit-hobbies" placeholder="e.g., Avoiding Tina Rex">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-studies">Studies</label>
+                        <input type="text" id="edit-studies" placeholder="e.g., Ms. Simian's Class">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-from">From</label>
+                        <input type="text" id="edit-from" placeholder="e.g., Elmore">
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="submit" class="auth-btn signup-btn" id="save-profile-btn">SAVE CHANGES</button>
+                        <a href="profile.html" class="auth-btn" style="background: #ccc; text-align: center; color: #333; text-decoration: none;">CANCEL</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+        
+        <aside class="right-sidebar" style="visibility: hidden;"></aside>
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html"><i class="ri-group-fill"></i></a>
+        <a href="profile.html" class="active"><i class="ri-user-smile-fill"></i></a>
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
+
+    <div class="post-modal" id="avatar-modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3>Choose Your Character</h3>
+                <button type="button" id="close-avatar-modal"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="avatar-grid" id="avatar-grid"></div>
+        </div>
+    </div>
+
+
+</body>
+</html>

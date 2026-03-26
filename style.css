@@ -1,0 +1,1794 @@
+/* Variables for Elmore Plus Colors */
+:root {
+    --primary-blue: #4da6ff;
+    --primary-light-blue: #e9f4ff;
+    --nav-blue: #2d89ef;
+    --nav-blue-dark: #1b66c9;
+    --accent-green: #32b35a;
+    --accent-red: #ff4d4d;
+    --bg-gray: #eef1f6;
+    --text-dark: #333;
+    --border-color: #c0cddb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+        -webkit-tap-highlight-color: transparent;
+-webkit-touch-callout: none;
+/* -webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none; */
+    user-drag: none; /* Future-proof */
+    -webkit-user-drag: none; /* WebKit browsers */
+    user-select: none; /* Future-proof */
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* WebKit browsers */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
+
+body {
+    background-color: var(--bg-gray);
+    color: var(--text-dark);
+}
+
+/* --- Header & Navigation --- */
+.top-bar {
+    background: linear-gradient(to bottom, #7fc1ff, var(--primary-blue));
+    border-bottom: 4px solid var(--nav-blue-dark);
+    padding: 10px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.logo-icon {
+    color: var(--accent-green);
+    font-size: 2.5rem;
+}
+
+.logo-area h1 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+.main-nav a.active {
+    background-color: var(--nav-blue-dark);
+    border-radius: 4px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.search-bar input {
+    padding: 4px;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+}
+
+/* Navigation Alignment Classes */
+.top-bar.nav-left .main-nav {
+    margin-right: auto;
+    margin-left: 30px;
+}
+
+.top-bar.nav-center .main-nav {
+    margin: 0 auto;
+}
+
+.top-bar.nav-right .main-nav {
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+/* --- Mobile Search Dropdown --- */
+/* .mobile-search-dropdown {
+    display: none;
+    background: var(--nav-blue-dark);
+    padding: 10px 20px;
+    gap: 10px;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+} */
+
+/* .mobile-search-dropdown.active {
+    transform: translateY(0);
+}
+
+.mobile-search-dropdown input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+}
+
+.mobile-search-dropdown button {
+    background: var(--accent-green);
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+} */
+
+/* --- Layout Grid --- */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+/* --- Floating Sidebars --- */
+.left-sidebar, .right-sidebar {
+    background: white;
+    border: none; 
+    border-radius: 20px;
+    padding: 20px;
+    height: fit-content;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    margin-top: 10px; 
+    margin-bottom: 20px;
+}
+
+.username {
+    color: var(--nav-blue-dark);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.profile-pic img {
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    background-size: cover;
+    background-position: center;
+    object-fit: cover
+
+
+
+}
+
+.profile-links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    margin-top: 5px;
+}
+
+.profile-links a {
+    color: var(--nav-blue);
+    text-decoration: none;
+}
+
+.section-header, .friends-header {
+    background-color: var(--nav-blue);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin: 15px 0 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photo-grid, .friends-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.photo-grid img, .friends-grid img {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+/* --- Feed & Posts --- */
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* 
+.post {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.post-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    object-fit: cover;
+}
+
+.post-bubble {
+    flex: 1;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    position: relative;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+} */
+/* =========================================
+   POST FEED UI FIXES (Desktop & Mobile)
+   ========================================= */
+
+/* 1. Fix the main post container */
+.post {
+    display: flex;
+    align-items: flex-start; /* Aligns items to the top instead of the center */
+    gap: 15px;
+    width: 100%;
+}
+
+/* 2. Fix the Avatar from squishing */
+.post-avatar {
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0; /* CRITICAL: Stops the avatar from turning into an oval */
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    object-fit: cover;
+ 
+    user-drag: none; /* Future-proof */
+    -webkit-user-drag: none; /* WebKit browsers */
+    user-select: none; /* Future-proof */
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* WebKit browsers */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+
+}
+
+/* 3. Fix the Post Bubble layout */
+.post-bubble {
+    flex: 1; /* Takes the remaining middle space */
+    min-width: 0; /* CRITICAL: Stops text from forcing the bubble to break the screen */
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    position: relative;
+    
+    /* These fix the desktop bug where text sat next to the name! */
+    display: flex;
+    flex-direction: column; 
+    align-items: stretch; 
+    
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Align the speech bubble tails to the new flex-start positioning */
+.post-bubble::before {
+    top: 35px; 
+}
+.post-bubble::after {
+    top: 35px;
+}
+
+/* The Header inside the bubble (Name & Trash Can) */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    border-bottom: 2px dashed var(--bg-gray); /* Cool divider like the show */
+    padding-bottom: 8px;
+}
+
+.post-header strong {
+    color: var(--nav-blue-dark);
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Truncates super long names with '...' */
+    margin-right: 10px;
+}
+
+/* 4. Fix the 1-letter-per-line wrapping bug on Mobile! */
+.post-bubble p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: normal; /* This specifically fixes the weird mobile stacking */
+    white-space: pre-wrap;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* 5. Fix the Like Button squishing */
+.like-section {
+    /* width: 70px;
+    height: 70px; */
+        width: 45px;
+    height: 45px;
+    flex-shrink: 0; /* Keeps the button perfectly square */
+    background: var(--accent-green);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #278e46;
+    transition: background-color 0.2s;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS FOR POSTS
+   ========================================= */
+@media (max-width: 600px) {
+    .post {
+        gap: 10px; /* Bring items closer together on small screens */
+    }
+
+    /* Shrink the avatar and like button slightly on phones */
+    .post-avatar, .like-section {
+        width: 55px; 
+        height: 55px;
+    }
+
+    .post-bubble {
+        padding: 12px;
+    }
+
+    /* Move the speech tail up slightly to match the smaller avatar */
+    .post-bubble::before, .post-bubble::after {
+        top: 27px; 
+    }
+    
+    .like-btn {
+        font-size: 1.2rem; /* Shrink thumbs-up icon so it fits */
+    }
+    .like-btn span {
+        font-size: 0.9rem !important;
+    }
+}
+.post-bubble::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 10px 12px 10px 0;
+    border-style: solid;
+    border-color: transparent var(--border-color) transparent transparent;
+}
+
+.post-bubble::after {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px 10px 8px 0;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+}
+
+.like-section {
+    background: var(--accent-green);
+    border-radius: 8px;
+    /* width: 70px;
+    height: 60px; */
+        width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #278e46;
+    transition: background-color 0.2s;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Add Post Modal --- */
+.post-modal {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    padding: 20px;
+    border: 3px solid var(--border-color);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    color: var(--nav-blue-dark);
+}
+
+.modal-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+#post-text {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    resize: none;
+    font-size: 1rem;
+    outline: none;
+}
+
+#post-text:focus {
+    border-color: var(--primary-blue);
+}
+
+/* --- Authentication Pages --- */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.auth-card h2 {
+    color: var(--nav-blue-dark);
+    margin-bottom: 5px;
+}
+
+.auth-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--nav-blue-dark);
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--nav-blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.auth-btn:hover { background-color: var(--nav-blue-dark); }
+.signup-btn { background-color: var(--accent-green); }
+.signup-btn:hover { background-color: #278e46; }
+
+.auth-links { margin-top: 20px; font-size: 0.9rem; }
+.auth-links a { color: var(--nav-blue); font-weight: bold; text-decoration: none; }
+.auth-links a:hover { text-decoration: underline; }
+
+.error-message {
+    color: #d9534f; background: #fdf7f7; border: 1px solid #d9534f;
+    padding: 10px; border-radius: 4px; font-size: 0.85rem;
+    margin-bottom: 15px; display: none;
+}
+
+/* --- Mobile Navigation Base --- */
+.mobile-bottom-bar { display: none; }
+.floating-add-btn { display: none; }
+
+/* --- Responsive Layout --- */
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding-bottom: 80px; 
+    }
+
+    .top-bar .main-nav, .left-sidebar, .right-sidebar, .search-bar {
+        display: none; 
+    }
+
+    .mobile-search-dropdown {
+        display: flex;
+    }
+
+    /* Stable Bottom Bar */
+    .mobile-bottom-bar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 65px;
+        background: white;
+        border-top: 1px solid var(--border-color);
+        z-index: 1000; 
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    .mobile-bottom-bar a {
+        color: var(--nav-blue);
+        font-size: 1.5rem;
+        text-decoration: none;
+        padding: 10px;
+        transition: transform 0.2s;
+    }
+
+    .mobile-bottom-bar a.active {
+        color: var(--accent-green);
+        transform: translateY(-2px);
+    }
+
+    /* Floating Add Post Button (Outside right) */
+    .floating-add-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 85px; 
+        right: 20px;  
+        background-color: var(--accent-green);
+        color: white;
+        border: none;
+        /* border-radius: 50%; */
+                border-radius: 15px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        box-shadow: 0 4px 12px rgba(50, 179, 90, 0.4);
+        cursor: pointer;
+        z-index: 1001;
+        transition: transform 0.2s;
+    }
+
+    .floating-add-btn:active {
+        transform: scale(0.95);
+    }
+}
+
+@media (min-width: 901px) {
+    .mobile-search-dropdown { display: none !important; }
+}
+
+
+/* --- FULL SITE LOADER OVERLAY --- */
+#site-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-gray); /* Matches your body background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Higher than top-bar and modals */
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.loader-logo {
+    width: 120px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+}
+
+.loading-text {
+    color: var(--nav-blue-dark); /* Using your primary dark blue */
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+/* Reusing your spin animation */
+.spinner-circle {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color); /* */
+    border-top: 5px solid var(--accent-green); /* Using your Elmore green */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 15px;
+}
+
+#site-loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+/* --- Loading Spinner --- */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--nav-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Like Button Toggle Logic --- */
+/* .like-section.liked {
+    background-color: #278e46 !important; 
+    border-color: #1e6d35 !important;
+} */
+
+.like-btn i {
+    transition: transform 0.2s ease;
+}
+
+.like-btn:active i {
+    transform: scale(1.4); /* Pop effect when clicking */
+}
+
+
+/* Normal state (Deselected) */
+.like-section {
+    background-color: var(--accent-green);
+    transition: background-color 0.3s ease;
+}
+
+/* Selected state (Liked) */
+.like-section.liked {
+    background-color: #278e46; /* A darker, confirmed green */
+    border-color: #1e6d35;
+    transform: scale(1.05); /* Slight pop to show it's active */
+}
+
+/* --- Funny Auth Features Styling --- */
+.funny-meter {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #888;
+    transition: color 0.3s;
+}
+
+/* Password Strength Colors */
+.meter-weak { color: #d9534f; } /* Red */
+.meter-medium { color: #f0ad4e; } /* Orange */
+.meter-strong { color: var(--accent-green); } /* Green */
+
+.funny-checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px dashed var(--border-color);
+}
+
+.funny-checkbox-container input {
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.funny-checkbox-container label {
+    font-size: 0.8rem;
+    color: var(--nav-blue-dark);
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Desktop Create Post Box --- */
+.create-post-box {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px; /* Space between box and posts */
+}
+
+.create-post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.small-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    /* border-radius: 50%; */
+    border: 1px solid var(--border-color);
+    background-size: contain;
+    background-position: center;
+    object-fit: cover;
+
+}
+
+#desktop-post-text {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    resize: none;
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--bg-gray);
+}
+
+#desktop-post-text:focus {
+    border-color: var(--primary-blue);
+    background-color: white;
+}
+
+.create-post-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.create-post-actions .auth-btn {
+    width: auto;
+    padding: 8px 25px;
+    margin: 0;
+}
+
+/* --- STRICT MOBILE SEARCH FIX --- */
+/* By default (Desktop), completely hide the mobile dropdown */
+/* .mobile-search-dropdown {
+    display: none !important; 
+} */
+
+@media (max-width: 900px) {
+    /* Hide the desktop search bar */
+/* 1. HIDE THE DESKTOP POST BOX ON MOBILE */
+    .create-post-box {
+        display: none !important; 
+    }
+
+    /* 2. FORCE DESKTOP SEARCH TO HIDE */
+    .top-bar .search-bar {
+        display: none !important;
+    }
+
+    /* 3. FIX THE PEEKING MOBILE SEARCH BOX */
+    .mobile-search-dropdown {
+        display: none; /* Hidden completely, no transform needed */
+        background: var(--nav-blue-dark);
+        padding: 15px 20px;
+        gap: 10px;
+        position: fixed; 
+        top: 94px; /* Adjust this if your header is slightly taller/shorter */
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .mobile-search-dropdown.active {
+        display: flex;
+        /* A cleaner animation that doesn't push it off the top of the screen */
+        animation: fadeInDown 0.2s ease-out forwards;
+    }
+    /* Add this clean animation rule outside the media query at the very bottom */
+@keyframes fadeInDown {
+    0% { transform: translateY(-10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.logo-img{
+    width: 200px;
+    user-drag: none; /* Future-proof */
+    -webkit-user-drag: none; /* WebKit browsers */
+    user-select: none; /* Future-proof */
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* WebKit browsers */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+
+
+}
+
+
+
+
+
+
+
+
+/* --- Mobile Slide-Out Menu --- */
+.mobile-nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen */
+    width: 250px;
+    height: 100vh;
+    background: var(--nav-blue-dark);
+    z-index: 2000;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+}
+
+.mobile-nav-menu.active {
+    right: 0; /* Slides into view */
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: var(--primary-blue);
+    color: white;
+}
+
+.mobile-nav-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-nav-menu a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Delete Button styling */
+.delete-btn {
+    background: none;
+    border: none;
+    color: #d9534f;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   STRICT SEARCH BAR FIX (DESKTOP VS MOBILE)
+   ========================================= */
+
+/* 1. COMPLETELY hide the mobile search box when on a Desktop */
+@media (min-width: 901px) {
+    .mobile-search-dropdown {
+        display: none !important;
+    }
+}
+
+/* 2. Mobile View Rules */
+@media (max-width: 900px) {
+    
+    /* Force the desktop search bar to disappear entirely */
+    .top-bar .search-bar {
+        display: none !important;
+    }
+
+    /* Set the mobile dropdown to display: none by default */
+    .mobile-search-dropdown {
+        display: none; /* Hidden strictly */
+        background: var(--nav-blue-dark);
+        padding: 15px 20px;
+        gap: 10px;
+        position: fixed; /* Sticks under the top bar */
+        top: 94px; /* Adjust this if your top bar is taller/shorter */
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* When the Javascript adds the '.active' class, change to display: flex */
+    .mobile-search-dropdown.active {
+        display: flex;
+        animation: dropDownBounce 0.3s ease-out forwards;
+    }
+
+    /* Make the input look nice and big for mobile thumbs */
+    .mobile-search-dropdown input {
+        flex: 1;
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+    }
+
+    .mobile-search-dropdown button {
+        background: var(--accent-green);
+        color: white;
+        border: none;
+        padding: 0 20px;
+        border-radius: 6px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+}
+
+/* A little Gumball-style bounce animation for when it opens */
+@keyframes dropDownBounce {
+    0% { transform: translateY(-20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   PROFILE PAGE STYLES (Rocky's Layout)
+   ========================================= */
+
+.profile-side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.side-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: var(--nav-blue-dark);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+}
+.side-nav-item.active{
+background-color: var(--primary-light-blue);
+}
+
+.side-nav-item:hover {
+    background-color: var(--bg-gray);
+}
+
+.side-nav-item i {
+    font-size: 1.5rem;
+}
+
+/* Profile Banner Area */
+.profile-banner-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-banner-top {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    border-bottom: 2px solid var(--bg-gray);
+    padding-bottom: 10px;
+}
+
+.big-profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    border: 3px solid var(--nav-blue-dark);
+    object-fit: cover;
+}
+
+.profile-title-area h2 {
+    color: var(--nav-blue-dark);
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.profile-tabs a {
+    color: #888;
+    text-decoration: none;
+    padding-bottom: 5px;
+}
+
+.profile-tabs a.active-tab {
+    color: var(--nav-blue-dark);
+}
+
+/* About Me Section */
+.about-me-box {
+    background: linear-gradient(to bottom, #fdfdfd, #f4f6f9);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.about-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 10px;
+}
+
+.about-header h3 {
+    color: var(--nav-blue-dark);
+    font-size: 1.1rem;
+    text-decoration: underline;
+}
+
+.about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.about-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.about-item i {
+    color: var(--primary-blue);
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.about-item strong {
+    color: var(--nav-blue-dark);
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.about-item p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.profile-friends-count h3 {
+    color: var(--nav-blue-dark);
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.mt-10 { margin-top: 10px; }
+
+
+
+
+
+
+
+/* --- FIX: Prevent Long Text from Breaking Layout --- */
+.post-bubble p, 
+.about-item p,
+.bio-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap; /* Keeps user's line breaks! */
+    max-width: 100%;
+}
+
+/* Also add this so our new Bio textarea looks good */
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    outline: none;
+    font-size: 1rem;
+    resize: vertical;
+    font-family: inherit;
+}
+.input-group textarea:focus {
+    border-color: var(--primary-blue);
+}
+
+
+
+/* =========================================
+   SCROLLABLE & RESPONSIVE AVATAR MODAL
+   ========================================= */
+
+/* 1. Force the modal to fit on the screen and scroll */
+#avatar-modal .modal-content {
+    max-height: 80vh; /* Never gets taller than 80% of the screen height */
+    overflow-y: auto; /* Adds a scrollbar if the images go past the bottom */
+    width: 90%;
+    max-width: 450px;
+}
+
+/* 2. Sticky Header (Keeps the "Choose Character" title at the top while scrolling) */
+#avatar-modal .modal-header {
+    position: sticky;
+    top: -20px; /* Aligns with the modal padding */
+    background: white;
+    padding: 20px 0 10px 0;
+    z-index: 10;
+    border-bottom: 2px dashed var(--border-color);
+    margin-top: -20px;
+}
+
+/* 3. Auto-Responsive Grid */
+.avatar-grid {
+    display: grid;
+    /* 'auto-fill' automatically figures out how many images fit in a row! 
+       It will show 3 on desktop, and automatically drop to 2 on small phones. */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+
+.preset-avatar {
+    width: 100%;
+    aspect-ratio: 1/1; /* Keeps them perfectly square no matter the screen size */
+    border-radius: 8px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    object-fit: cover;
+    background-color: var(--bg-gray); /* Placeholder color while image loads */
+}
+
+.preset-avatar:hover {
+    border-color: var(--accent-green);
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+
+/* --- Edit Profile Card --- */
+.edit-profile-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 900px) {
+    /* Mobile adjustments for the profile main layout */
+    .profile-banner-top {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .profile-tabs {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Custom Alert/Confirm Modals --- */
+.alert-content {
+    max-width: 350px;
+    text-align: center;
+    padding: 30px;
+    border: 4px solid var(--nav-blue-dark); /* */
+}
+
+.alert-icon {
+    font-size: 3.5rem;
+    color: #f0ad4e; /* Warning Yellow */
+    margin-bottom: 10px;
+}
+
+.alert-icon.success {
+    color: var(--accent-green); /* */
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.alert-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+
+
+
+
+
+
+/* =========================================
+   NOTIFICATION SYSTEM STYLING
+   ========================================= */
+.noti-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.button-noti{
+    background-color: transparent;
+    border: transparent;
+    color: white;
+}
+/* The Red Indicator Badge */
+.noti-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #ff4d4d; /* Bright Red */
+    color: white;
+    font-size: 0.65rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    pointer-events: none;
+}
+
+/* =========================================
+   NOTIFICATION DROPDOWN (DESKTOP & MOBILE)
+   ========================================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.noti-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Default Desktop Dropdown */
+.noti-dropdown {
+    position: absolute;
+    top: 45px; /* Drops right below the bell */
+    right: -10px; /* Aligns with the edge */
+    width: 350px;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 4000; /* Stays above everything */
+    max-height: 400px;
+    overflow-y: auto;
+    cursor: default;
+}
+
+.noti-dropdown.hidden {
+    display: none;
+}
+
+/* --- THE MOBILE OVERLAY MAGIC --- */
+@media (max-width: 900px) {
+    .header-actions .search-bar {
+        display: none !important; /* Hides desktop search on mobile */
+    }
+
+    .noti-dropdown {
+        /* FIXED positioning detaches it completely so it CANNOT push the page down */
+        position: fixed; 
+        top: 70px; /* Sits just under the mobile header */
+        right: 5%; /* Centers it horizontally */
+        width: 90%; /* Takes up most of the screen width */
+        max-height: 60vh; /* Prevents it from reaching the bottom bar */
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    /* Optional: Add a small pointer arrow for mobile */
+    .noti-dropdown::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        right: 20px;
+        border-width: 0 10px 10px 10px;
+        border-style: solid;
+        border-color: transparent transparent var(--border-color) transparent;
+    }
+}
+.noti-dropdown.hidden { display: none; }
+
+.noti-header {
+    padding: 12px 15px;
+    font-weight: bold;
+    color: var(--nav-blue-dark);
+    border-bottom: 2px solid var(--bg-gray);
+    background: #f8f9fa;
+    position: sticky;
+    top: 0;
+}
+
+/* Individual Notification Items */
+.noti-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--bg-gray);
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: var(--text-dark);
+}
+
+.noti-item:hover { background: #f1f4f8; }
+
+/* Highlight unread notifications */
+.noti-item.unread { background: #eef7ff; } 
+.noti-item.unread:hover { background: #e0f0ff; }
+
+.noti-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-blue);
+}
+
+.noti-text { font-size: 0.85rem; line-height: 1.3; }
+.noti-time { font-size: 0.7rem; color: #888; margin-top: 3px; }
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   SMART SEARCH DROPDOWN STYLING
+   ========================================= */
+.search-dropdown {
+    position: absolute;
+    top: 92%; /* Placed directly below the search bar */
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 3000;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.search-dropdown.hidden {
+    display: none;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--bg-gray);
+    transition: background 0.2s;
+    text-decoration: none; /* In case we use <a> tags */
+    color: var(--text-dark);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: var(--bg-gray);
+}
+
+.search-result-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--nav-blue);
+}
+
+.search-result-name {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--nav-blue-dark);
+}
+
+.search-loading, .search-empty {
+    padding: 15px;
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   FRIENDS DASHBOARD STYLING
+   ========================================= */
+.friends-list-container {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--bg-gray);
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.user-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.card-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--nav-blue);
+    cursor: pointer;
+}
+
+.card-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.card-name {
+    font-weight: bold;
+    color: var(--nav-blue-dark);
+    font-size: 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.card-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-accept { background: var(--accent-green); }
+.btn-decline { background: #d9534f; }
+.btn-view { background: var(--nav-blue); width: 100%; margin-top: 5px; }
+
+@media (max-width: 600px) {
+    .friends-list-container { grid-template-columns: 1fr; }
+}
+
+
+
+
+
+
+
+/* =========================================
+   FRIENDS PAGE MOBILE RESPONSIVENESS FIX
+   ========================================= */
+
+/* Replace the inline style with a class */
+.friends-layout {
+    grid-template-columns: 250px 1fr !important;
+}
+
+@media (max-width: 900px) {
+    /* 1. Stack the layout into a single column */
+    .friends-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 2. Bring back the left sidebar so mobile users can navigate! */
+    .friends-layout .left-sidebar {
+        display: block !important;
+        padding: 5px 0 10px 0;
+        margin: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    /* 3. Turn the vertical menu into a swipeable horizontal menu */
+    .profile-side-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch; /* Smooth swipe */
+        
+        /* Hide scrollbar for a clean app look */
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+    }
+    .profile-side-nav::-webkit-scrollbar { 
+        display: none; 
+    }
+
+    /* 4. Style the menu items to look like pill buttons */
+    .side-nav-item {
+        flex-shrink: 0;
+        white-space: nowrap;
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 8px 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* 5. Highlight the active tab */
+    .side-nav-item.active {
+        background-color: var(--nav-blue-dark);
+        border-color: var(--nav-blue-dark);
+    }
+    .side-nav-item.active span, 
+    .side-nav-item.active i {
+        color: white !important;
+    }
+}
+
+
+
+
+
+
+.spin-text{
+
+}

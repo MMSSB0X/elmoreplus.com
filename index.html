@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elmore Plus</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script type="module" src="load.js"></script>
+        <script src="main.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="payload.js"></script>
+    <script type="module" src="search.js"></script>
+    <script type="module" src="noti.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+/* =========================================
+   RESPONSIVE BIO TOOLTIP STYLING
+   ========================================= */
+
+/* 1. The Wrapper (Needed to position the tooltip) */
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0; /* Prevents avatar squishing */
+    cursor: pointer; /* Suggests it can be interacted with */
+}
+
+/* 2. The Tooltip Box */
+.bio-tooltip {
+    visibility: hidden;
+    width: 180px; /* Slightly wider for better text fit */
+    background-color: var(--nav-blue-dark);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    
+    /* Position exactly above the center of the avatar */
+    bottom: 110%; 
+    left: 110%;
+    transform: translateX(-50%);
+    
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    font-size: 0.8rem;
+    pointer-events: none; /* Stops tooltip from blocking clicks */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.1);
+    
+    /* FIX: Ensure long text wraps nicely and doesn't break the box */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+/* 3. The Little Arrow pointing down (Fixed!) */
+.bio-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the very bottom of the tooltip */
+    left: 50%; /* Perfectly centered */
+    margin-left: -6px; /* Offset by half the border width */
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--nav-blue-dark) transparent transparent transparent;
+}
+
+/* 4. SHOW ON DESKTOP HOVER */
+.avatar-wrapper:hover .bio-tooltip {
+    visibility: visible;
+    opacity: 1;
+    bottom: 120%; /* Adds a cool upward floating animation */
+}
+
+/* =========================================
+   MOBILE TOUCH SUPPORT
+   ========================================= */
+
+/* 5. Show tooltip while finger is pressed (Active state) */
+.avatar-wrapper:active .bio-tooltip {
+    visibility: visible;
+    opacity: 1;
+    bottom: 120%;
+}
+
+/* 6. Prevent annoying mobile system menus from popping up on hold */
+.post-avatar {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Safari */
+    user-select: none;           /* Standard syntax */
+    pointer-events: auto;
+}
+
+/* 7. Mobile-Specific Adjustments */
+@media (max-width: 600px) {
+    .bio-tooltip {
+        width: 150px;
+        font-size: 0.75rem;
+        padding: 8px;
+        bottom: 115%; /* Lift slightly higher by default */
+    }
+    
+    /* Lift it even higher on touch so the user's finger doesn't hide the text */
+    .avatar-wrapper:active .bio-tooltip {
+        bottom: 130%; 
+    }
+}
+    </style>
+</head>
+<body>
+<div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">CONNECTING TO ELMORE...</p>
+    </div>
+
+<header class="top-bar nav-center">
+    <div class="header-content">
+        <div class="logo-area">
+            <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="index.html" class="active">HOME</a>
+            <a href="profile.html">MY ACCOUNT</a>
+            <a href="friends.html">FRIENDS</a>
+            <a href="#" class="logout-btn">LOGOUT</a>
+        </nav>
+        
+        <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+            
+            <div class="search-bar" style="position: relative;">
+                <label for="search-desktop">SEARCH</label>
+                <input type="text" id="search-desktop" autocomplete="on" placeholder="Search Elmore...">
+                <div id="search-results-desktop" class="search-dropdown hidden"></div>
+            </div>
+
+            <div class="noti-wrapper" id="header-noti-wrapper">
+                <a href="#" id="header-noti-btn" style="position: relative; color: white; font-size: 1.5rem; text-decoration: none;">
+                    <i class="ri-notification-3-fill"></i>
+                    <span class="noti-badge hidden" id="header-noti-badge">0</span>
+                </a>
+                
+                <div class="noti-dropdown hidden" id="header-noti-dropdown">
+                    <div class="noti-header">Notifications</div>
+                    <div id="header-noti-list">
+                        <p style="padding: 15px; color: #888; text-align: center; font-size: 0.8rem;">No new notifications</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+    <!-- <div class="mobile-search-dropdown" id="mobile-search-box">
+        <input type="text" placeholder="Search friends...">
+        <button><i class="ri-search-line"></i></button>
+    </div> -->
+<div class="mobile-search-dropdown" id="mobile-search-box">
+    <div style="display: flex; width: 100%; gap: 10px;">
+        <input type="text" id="search-mobile" placeholder="Search Elmore..." autocomplete="off">
+        <button><i class="ri-search-line"></i></button>
+    </div>
+    <div id="search-results-mobile" class="search-dropdown hidden"></div>
+</div>
+
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+        <div class="mobile-menu-header">
+            <h2>MENU</h2>
+            <i class="ri-close-line mobile-menu-trigger" style="font-size: 1.5rem; color: white; cursor: pointer;"></i>
+        </div>
+        <a href="index.html" class="active">HOME</a>
+        <a href="profile.html">MY ACCOUNT</a>
+        <a href="friends.html">FRIENDS</a>
+        <a href="#" class="logout-btn" style="color: #ff4d4d;">LOGOUT</a>
+    </div>
+
+    <div class="container layout-grid">
+        
+        <!-- <aside class="left-sidebar">
+            <div class="profile-card">
+                <h3 class="username" id="display-username">Loading...</h3>
+                <div class="profile-pic">
+                    <img src="https://placehold.co/150x150/87CEEB/FFF?text=Me" alt="Profile" id="display-pic">
+                </div>
+                <div class="profile-links">
+                    <a href="#">PROFILE PICTURE</a>
+                    <a href="#">MODIFY</a>
+                </div>
+            </div> -->
+            <aside class="left-sidebar">
+    <div class="profile-card">
+        <h3 class="username display-username" id="display-username">Loading...</h3>
+        
+        <div class="profile-pic">
+            <img src="https://placehold.co/150x150/87CEEB/FFF?text=Me" 
+                 alt="Profile" 
+                 class="display-pic" 
+                 id="display-pic">
+        </div>
+        
+        <div class="profile-links">
+            <a href="profile-edit.html">PROFILE PICTURE</a>
+            <a href="profile-edit.html">MODIFY</a>
+        </div>
+    </div>
+
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <i class="ri-image-fill"></i> PHOTOS
+                </div>
+                <div class="photo-grid">
+                    <img src="https://placehold.co/60" alt="photo">
+                    <img src="https://placehold.co/60" alt="photo">
+                    <img src="https://placehold.co/60" alt="photo">
+                    <img src="https://placehold.co/60" alt="photo">
+                </div>
+            </div>
+        </aside>
+
+        <main class="feed">
+            
+            <div class="create-post-box">
+                <div class="create-post-header">
+                    <img src="https://placehold.co/50/87CEEB/FFF?text=Me" alt="Profile" id="inline-post-pic" class="small-avatar">
+                    <span id="inline-post-name" style="font-weight: bold; color: var(--nav-blue-dark);">Update Status</span>
+                </div>
+                <textarea id="desktop-post-text" placeholder="What's going on in Elmore today?"></textarea>
+                <div class="create-post-actions">
+                    <button class="auth-btn" id="desktop-submit-post">Post</button>
+                </div>
+            </div>
+
+            <div id="feed-container">
+                </div>
+            
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="friends-header">
+                <h3>FRIENDS</h3>
+                <span style="cursor: pointer;" onclick="window.location.href='friends.html';">View all</span>
+            </div>
+            <div class="friends-grid">
+                <img src="https://placehold.co/60/ccc/fff" alt="Friend">
+                <img src="https://placehold.co/60/ccc/fff" alt="Friend">
+                <img src="https://placehold.co/60/ccc/fff" alt="Friend">
+                <img src="https://placehold.co/60/ccc/fff" alt="Friend">
+                <img src="https://placehold.co/60/ccc/fff" alt="Friend">
+                <img src="https://placehold.co/60/ccc/fff" alt="Friend">
+            </div>
+        </aside>
+
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html" class="active"><i class="ri-home-5-fill"></i></a>
+        <a href="#" id="mobile-search-trigger"><i class="ri-search-line"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-line"></i></a>
+        
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
+    
+    <button class="floating-add-btn" id="open-post-modal"><i class="ri-add-line"></i></button>
+
+    <div class="post-modal" id="post-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Status</h3>
+                <button id="close-post-modal"><i class="ri-close-line"></i></button>
+            </div>
+            <textarea id="post-text" placeholder="What's on your mind?"></textarea>
+            <button class="auth-btn" id="submit-post">Post to Elmore Plus</button>
+        </div>
+    </div>
+<div class="post-modal" id="custom-alert-modal">
+    <div class="modal-content alert-content">
+        <div id="alert-icon-box" class="alert-icon"><i class="ri-error-warning-fill"></i></div>
+        <h3 id="alert-title">Are you sure?</h3>
+        <p id="alert-message">This post will be gone forever!</p>
+        
+        <div class="alert-actions" id="alert-buttons">
+            <button id="alert-cancel" class="auth-btn" style="background: #ccc; color: #333;">Cancel</button>
+            <button id="alert-confirm" class="auth-btn signup-btn">Delete It</button>
+        </div>
+        
+        <button id="alert-close" class="auth-btn hidden">Awesome!</button>
+    </div>
+</div>
+
+    <script>
+
+    </script>
+</body>
+</html>

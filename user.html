@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elmore Plus - Citizen Profile</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+        <script src="main.js"></script>
+    <script type="module" src="search.js"></script>
+    <script type="module" src="noti.js"></script>
+    <script type="module" src="user.js"></script>
+    <script type="module" src="load.js"></script>
+</head>
+<body>
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">CONNECTING TO ELMORE...</p>
+    </div>
+
+    <div id="site-loader">
+        <img src="images/elmore-plus.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">LOCATING CITIZEN...</p>
+    </div>
+
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html">FRIENDS</a>
+                
+                <div class="noti-wrapper" id="desktop-noti-wrapper">
+                    <a href="#" id="desktop-noti-btn" style="position: relative;">
+                        <i class="ri-notification-3-fill" style="font-size: 1.2rem; color: white;"></i>
+                        <span class="noti-badge hidden" id="desktop-noti-badge">0</span>
+                    </a>
+                    <div class="noti-dropdown hidden" id="desktop-noti-dropdown">
+                        <div class="noti-header">Notifications</div>
+                        <div id="desktop-noti-list"></div>
+                    </div>
+                </div>
+                
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+            <div class="search-bar" style="position: relative;">
+                <label for="search-desktop">SEARCH</label>
+                <input type="text" id="search-desktop" autocomplete="off">
+                <div id="search-results-desktop" class="search-dropdown hidden"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-search-dropdown" id="mobile-search-box">
+        <div style="display: flex; width: 100%; gap: 10px;">
+            <input type="text" id="search-mobile" placeholder="Search Elmore..." autocomplete="off">
+            <button><i class="ri-search-line"></i></button>
+        </div>
+        <div id="search-results-mobile" class="search-dropdown hidden"></div>
+    </div>
+
+    <div class="container layout-grid">
+        
+        <aside class="left-sidebar">
+            <div class="profile-card">
+                <h3 class="username display-username" id="display-username">Loading...</h3>
+                <div class="profile-pic">
+                    <img src="https://placehold.co/150" alt="Profile" class="display-pic" id="display-pic">
+                </div>
+                <div class="profile-links">
+                    <a href="profile.html">MY PROFILE</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="feed">
+            
+            <div class="profile-banner-card">
+                <div class="profile-banner-top">
+                    <img src="https://placehold.co/150" alt="Avatar" id="target-profile-pic" class="big-profile-pic">
+                    <div class="profile-title-area">
+                        <h2 id="target-username">Loading Citizen...</h2>
+                        <button id="add-friend-btn" class="auth-btn signup-btn" style="width: auto; padding: 8px 20px; margin-top: 5px;">
+                            <i class="ri-user-add-line"></i> Add Friend
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="about-me-box mt-10">
+                    <div class="about-header">
+                        <h3><i class="ri-information-fill"></i> About</h3>
+                    </div>
+                    <div class="about-details">
+                        <div class="about-item">
+                            <i class="ri-file-text-line"></i>
+                            <div>
+                                <strong>Bio</strong>
+                                <p id="target-bio">No bio provided.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header" style="background: var(--nav-blue-dark);">
+                <span id="target-feed-title">Recent Posts</span>
+            </div>
+            
+            <div id="user-feed-container">
+                <div style="text-align: center; padding: 20px; color: #888;">Loading posts...</div>
+            </div>
+            
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="friends-header">
+                <h3>FRIENDS</h3>
+                <a href="friends.html" style="color: white; text-decoration: none; font-size: 0.7rem;">View all</a>
+            </div>
+            <div class="friends-grid"></div>
+        </aside>
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="#" id="mobile-search-trigger"><i class="ri-search-line"></i></a>
+        <a href="#" id="mobile-noti-btn" style="position: relative;">
+            <i class="ri-notification-3-line"></i>
+            <span class="noti-badge hidden" id="mobile-noti-badge">0</span>
+        </a>
+        <a href="profile.html"><i class="ri-user-smile-line"></i></a>
+    </nav>
+
+ 
+</body>
+</html>

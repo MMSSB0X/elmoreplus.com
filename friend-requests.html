@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend Requests - Elmore Plus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+    <script type="module" src="friends.js"></script>
+    <script type="module" src="load.js"></script>
+</head>
+<body>
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">CHECKING MAILBOX...</p>
+    </div>
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <a href="index.html">
+                        <img src="images/elmore-plus.png" class="logo-img" alt="">
+                    </a>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html" class="active">FRIENDS</a>
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+        </div>
+    </header>
+
+<div class="container layout-grid friends-layout">        
+        <aside class="left-sidebar profile-side-nav">
+            <div class="side-nav-item" onclick="window.location.href='friends.html';">
+                <i class="ri-user-fill" style="color: var(--primary-blue); "></i><span>My Friends</span>
+            </div>
+            <div class="side-nav-item" onclick="window.location.href='friends-search.html';">
+                <i class="ri-user-search-fill" style="color: var(--accent-red);"></i><span>Find Friends</span>
+            </div>
+            <div class="side-nav-item active" onclick="window.location.href='friend-requests.html';">
+                <i class="ri-user-received-2-fill" style="color: var(--accent-green);"></i><span>Friend Requests</span>
+            </div>
+        </aside>
+
+        <main class="profile-main">
+            <div class="edit-profile-card">
+                <h2 style="color: var(--nav-blue-dark); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Pending Requests</h2>
+                
+                <div id="requests-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                    <p style="text-align: center; color: #888; grid-column: 1 / -1;">Checking for requests...</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html" class="active"><i class="ri-group-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-fill"></i></a>
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
+
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+        <div class="mobile-menu-header">
+            <h2>MENU</h2>
+            <i class="ri-close-line mobile-menu-trigger" style="font-size: 1.5rem; color: white; cursor: pointer;"></i>
+        </div>
+        <a href="index.html">HOME</a>
+        <a href="profile.html">MY ACCOUNT</a>
+        <a href="friends.html">FRIENDS</a>
+        <a href="#" class="logout-btn" style="color: #ff4d4d;">LOGOUT</a>
+    </div>
+
+</body>
+</html>

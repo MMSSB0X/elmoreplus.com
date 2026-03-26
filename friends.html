@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Friends - Elmore Plus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+        <script src="main.js"></script>
+    <script type="module" src="friends.js"></script>
+    <script type="module" src="noti.js"></script>
+    <script type="module" src="load.js"></script>
+</head>
+<body>
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">CONNECTING TO ELMORE...</p>
+    </div>
+ <header class="top-bar nav-center">
+    <div class="header-content">
+        <div class="logo-area">
+            <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="index.html" >HOME</a>
+            <a href="profile.html" class="active">MY ACCOUNT</a>
+            <a href="friends.html">FRIENDS</a>
+            <a href="#" class="logout-btn">LOGOUT</a>
+        </nav>
+        
+        <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+            
+            <div class="search-bar" style="position: relative;">
+                <label for="search-desktop">SEARCH</label>
+                <input type="text" id="search-desktop" autocomplete="on" placeholder="Search Elmore...">
+                <div id="search-results-desktop" class="search-dropdown hidden"></div>
+            </div>
+
+            <div class="noti-wrapper" id="header-noti-wrapper">
+                <a href="#" id="header-noti-btn" style="position: relative; color: white; font-size: 1.5rem; text-decoration: none;">
+                    <i class="ri-notification-3-fill"></i>
+                    <span class="noti-badge hidden" id="header-noti-badge">0</span>
+                </a>
+                
+                <div class="noti-dropdown hidden" id="header-noti-dropdown">
+                    <div class="noti-header">Notifications</div>
+                    <div id="header-noti-list">
+                        <p style="padding: 15px; color: #888; text-align: center; font-size: 0.8rem;">No new notifications</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+    <!-- <div class="container layout-grid" style="grid-template-columns: 250px 1fr;"> -->
+    <div class="container layout-grid friends-layout">
+        <aside class="left-sidebar profile-side-nav">
+            <div class="side-nav-item active" onclick="window.location.href='friends.html';"><i class="ri-user-fill" style="color: var(--primary-blue); "></i><span>My Friends</span></div>
+            <div class="side-nav-item" onclick="window.location.href='friends-search.html';"><i class="ri-user-search-fill" style="color: var(--accent-red);"></i><span>Find Friends</span></div>
+            <div class="side-nav-item" onclick="window.location.href='friend-requests.html';"><i class="ri-user-received-2-fill" style="color: var(--accent-green);"></i><span>Friend Requests</span></div>
+        </aside>
+
+        <main class="profile-main">
+            <div class="edit-profile-card">
+                <h2 style="color: var(--nav-blue-dark); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Everyone on Elmore Plus</h2>
+                
+                <div id="all-users-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                    <p style="text-align: center; color: #888; grid-column: 1 / -1;">Scanning Elmore for weirdos...</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html" class="active"><i class="ri-group-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-fill"></i></a>
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
+
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+        <div class="mobile-menu-header">
+            <h2>MENU</h2>
+            <i class="ri-close-line mobile-menu-trigger" style="font-size: 1.5rem; color: white; cursor: pointer;"></i>
+        </div>
+        <a href="index.html">HOME</a>
+        <a href="profile.html">MY ACCOUNT</a>
+        <a href="friends.html">FRIENDS</a>
+        <a href="#" class="logout-btn" style="color: #ff4d4d;">LOGOUT</a>
+    </div>
+
+
+</body>
+</html>

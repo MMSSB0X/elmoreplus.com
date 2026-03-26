@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Friends - Elmore Plus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <!-- <h1 class="spin-text">ELMORE PLUS</h1> -->
+        <div class="spinner-circle"></div>
+        <p class="loading-text">SEARCHING ELMORE...</p>
+    </div>
+
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt=""></a>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html" class="active">FRIENDS</a>
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+        </div>
+    </header>
+
+<div class="container layout-grid friends-layout">        <aside class="left-sidebar profile-side-nav">
+            <div class="side-nav-item" onclick="window.location.href='friends.html';">
+                <i class="ri-user-fill" style="color: var(--primary-blue);"></i><span>My Friends</span>
+            </div>
+            <div class="side-nav-item active" onclick="window.location.href='friends-search.html';">
+                <i class="ri-user-search-fill" style="color: var(--accent-red);"></i><span>Find Friends</span>
+            </div>
+            <div class="side-nav-item" onclick="window.location.href='friend-requests.html';">
+                <i class="ri-user-received-2-fill" style="color: var(--accent-green);"></i><span>Friend Requests</span>
+            </div>
+        </aside>
+
+        <main class="profile-main">
+            <div class="create-post-box" style="margin-bottom: 20px;">
+                <h3 style="color: var(--nav-blue-dark); margin-bottom: 10px;">Search Elmore Plus</h3>
+                <input type="text" id="big-user-search" placeholder="Type a citizen's name..." style="width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none;">
+            </div>
+
+            <div class="edit-profile-card">
+                <h2 style="color: var(--nav-blue-dark); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">
+                    Suggested Citizens
+                </h2>
+                
+                <div id="discover-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                    <p style="text-align: center; color: #888; grid-column: 1 / -1;">Looking for people...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html" class="active"><i class="ri-group-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-fill"></i></a>
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
+
+    <script type="module" src="load.js"></script>
+    <script src="main.js"></script>
+    <script type="module" src="friends.js"></script>
+</body>
+</html>
