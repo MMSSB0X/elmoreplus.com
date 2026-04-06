@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Messages - Elmore Plus</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="main.js"></script>
+    <script type="module" src="load.js"></script>
+    <script type="module" src="message.js"></script>
+
+    <style>
+        /* =========================================
+           INTEGRATED MESSENGER UI (FLOATING & STABLE)
+           ========================================= */
+        
+        .messenger-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* Floating Card Look - No heavy panels */
+        .messenger-wrapper {
+            position: relative;
+            height: calc(100vh - 140px);
+            background: white;
+            border: none;
+            border-radius: 20px; /* Matches style.css */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- LEFT SIDE: CONTACTS (NO PANEL LOOK) --- */
+        .chat-sidebar {
+            width: 320px;
+            background: transparent;
+            border-right: 2px dashed var(--bg-gray); /* Soft divider, no hard lines */
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .chat-sidebar-header {
+            padding: 20px;
+            background: transparent; /* Removed heavy gradient */
+            color: var(--nav-blue-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed var(--bg-gray);
+            z-index: 2;
+        }
+
+        .chat-sidebar-header h2 {
+            font-size: 1.3rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+            scrollbar-width: thin;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+            margin: 5px 10px;
+            border-radius: 12px;
+        }
+
+        .contact-item:hover {
+            background: var(--bg-gray);
+            transform: translateX(5px);
+        }
+
+        .contact-item.active {
+            background: var(--primary-light-blue);
+            border-left-color: var(--nav-blue);
+        }
+
+        .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px; /* Slightly squarish like Elmore style */
+            object-fit: cover;
+            border: 2px solid var(--primary-light-blue);
+        }
+
+        .contact-info { flex: 1; }
+        
+        .contact-name {
+            font-weight: bold;
+            color: var(--nav-blue-dark);
+            font-size: 1rem;
+            display: block;
+        }
+
+        .contact-status {
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+        }
+
+        /* --- RIGHT SIDE: CHAT AREA --- */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fdfdfd;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            background: white;
+            border-bottom: 2px dashed var(--bg-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 5;
+        }
+
+        .mobile-back-btn {
+            display: none;
+            background: var(--bg-gray);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            color: var(--nav-blue-dark);
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background 0.2s;
+        }
+        
+        .mobile-back-btn:active { background: var(--border-color); }
+
+        .chat-header-info h3 {
+            margin: 0;
+            color: var(--nav-blue-dark);
+            font-size: 1.1rem;
+        }
+
+        .destruct-badge {
+            font-size: 0.7rem;
+            background: #ffebd6;
+            color: #d97706;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid #fcd34d;
+            margin-top: 4px;
+        }
+
+        /* Message Bubbles */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg-row {
+            display: flex;
+            width: 100%;
+            animation: bubblePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bubblePop {
+            0% { transform: scale(0.8) translateY(10px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .msg-row.sent { justify-content: flex-end; }
+        .msg-row.received { justify-content: flex-start; }
+
+        .msg-bubble {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            position: relative;
+            word-wrap: break-word;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .msg-row.sent .msg-bubble {
+            background: var(--nav-blue);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-row.received .msg-bubble {
+            background: white;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg-time {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            margin-top: 5px;
+            text-align: right;
+            display: block;
+        }
+
+        /* Input Area */
+        .chat-input-area {
+            padding: 25px 20px;
+            background: white;
+            border-top: 2px dashed var(--bg-gray);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            outline: none;
+            font-size: 1rem;
+            background: var(--bg-gray);
+            transition: all 0.3s;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--nav-blue);
+            background: white;
+            box-shadow: 0 0 0 3px var(--primary-light-blue);
+        }
+
+        .chat-input-area button {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px; /* Squarish button matches the rest of the site */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(50, 179, 90, 0.4);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .chat-input-area button:hover { background: #278e46; transform: translateY(-2px); }
+        .chat-input-area button:active { transform: scale(0.9); }
+
+        .no-chat-selected {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+        }
+
+        .no-chat-selected i {
+            font-size: 5rem;
+            color: var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        /* =========================================
+           STABLE MOBILE SLIDE RESPONSIVENESS
+           ========================================= */
+        @media (max-width: 900px) {
+            .messenger-container {
+                padding: 0;
+                margin: 0;
+            }
+
+            .messenger-wrapper {
+                border-radius: 0;
+                box-shadow: none;
+                /* Accounts for mobile header + bottom bar perfectly */
+                height: calc(100vh - 65px - 70px); 
+            }
+
+            .chat-sidebar {
+                width: 100%;
+                flex-shrink: 0;
+                border-right: none;
+            }
+
+            /* The chat slides INSIDE the wrapper, leaving the bottom bar completely stable */
+            .chat-main {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                transform: translateX(100%); 
+                z-index: 20;
+            }
+
+            .messenger-wrapper.active-chat .chat-main {
+                transform: translateX(0);
+            }
+
+            .mobile-back-btn {
+                display: block;
+            }
+            
+            /* Show floating add button on mobile messages page too */
+            .floating-add-btn {
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">CONNECTING TO MESSENGER...</p>
+    </div>
+
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html">FRIENDS</a>
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="messenger-container">
+        <div class="messenger-wrapper" id="messenger-wrapper">
+            
+            <div class="chat-sidebar">
+                <div class="chat-sidebar-header">
+                    <h2><i class="ri-message-3-fill"></i> Messages</h2>
+                    <i class="ri-edit-box-line" style="cursor:pointer; font-size:1.4rem; color: var(--nav-blue);"></i>
+                </div>
+                <div class="contact-list" id="contact-list">
+                    <div style="text-align:center; margin-top:30px;">
+                        <div class="spinner" style="border-top-color: var(--nav-blue); width:30px; height:30px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-main" id="chat-main">
+                
+                <div id="no-chat-screen" class="no-chat-selected">
+                    <i class="ri-chat-smile-3-line"></i>
+                    <h2>Select a Citizen to Chat!</h2>
+                    <p>All messages are encrypted and temporary.</p>
+                </div>
+
+                <div id="active-chat-screen" style="display: none; flex: 1; flex-direction: column; height: 100%;">
+                    
+                    <div class="chat-header">
+                        <button class="mobile-back-btn" id="chat-back-btn"><i class="ri-arrow-left-s-line"></i></button>
+                        <img src="https://placehold.co/50" id="chat-header-pic" class="contact-avatar" style="width: 45px; height: 45px;">
+                        <div class="chat-header-info">
+                            <h3 id="chat-header-name">Friend Name</h3>
+                            <div class="destruct-badge" id="destruct-badge">
+                                <i class="ri-timer-flash-line"></i> Auto-Deletes in 10 Days
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="chat-messages">
+                        </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="message-input" placeholder="Say something cool..." autocomplete="off">
+                        <button id="send-btn"><i class="ri-send-plane-fill"></i></button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <button class="floating-add-btn" id="new-msg-btn">
+        <i class="ri-add-line"></i>
+    </button> -->
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-line"></i></a>
+        <a href="message.html" class="active"><i class="ri-message-3-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-line"></i></a>
+    </nav>
+
+</body>
+</html>
