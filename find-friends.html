@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Find Friends - Elmore Plus</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="main.js"></script>
+    <script type="module" src="friends.js"></script>
+    <script type="module" src="load.js"></script>
+    <style>
+        /* =========================================
+   FIND FRIENDS UI & ANIMATIONS
+   ========================================= */
+
+/* Frosted Glass Search Container */
+.glass-search-container {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.glass-search-container h2 {
+    color: var(--nav-blue-dark);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Modern Input Wrapper */
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-input-wrapper .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--nav-blue);
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    outline: none;
+}
+
+.search-input-wrapper input:focus {
+    border-color: var(--nav-blue);
+    background: white;
+    box-shadow: 0 0 0 4px var(--primary-light-blue);
+    transform: translateY(-2px);
+}
+
+/* Spring-Physics Grid Animation */
+.spring-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.spring-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    animation: springUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Stagger card animations */
+.spring-card:nth-child(1) { animation-delay: 0.05s; }
+.spring-card:nth-child(2) { animation-delay: 0.1s; }
+.spring-card:nth-child(3) { animation-delay: 0.15s; }
+.spring-card:nth-child(4) { animation-delay: 0.2s; }
+.spring-card:nth-child(5) { animation-delay: 0.25s; }
+.spring-card:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes springUp {
+    0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Add hover spring effect */
+.spring-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+    </style>
+</head>
+<body>
+
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">SEARCHING ELMORE...</p>
+    </div>
+
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html" class="active">FRIENDS</a>
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container layout-grid friends-layout">
+        
+        <!-- Left Navigation for Friends Section -->
+        <aside class="left-sidebar profile-side-nav">
+            <div class="side-nav-item" onclick="window.location.href='friends.html';"><i class="ri-user-fill" style="color: var(--primary-blue);"></i><span>My Friends</span></div>
+            <div class="side-nav-item active" onclick="window.location.href='find-friends.html';"><i class="ri-user-search-fill" style="color: var(--accent-red);"></i><span>Find Friends</span></div>
+            <div class="side-nav-item" onclick="window.location.href='friend-requests.html';"><i class="ri-user-received-2-fill" style="color: var(--accent-green);"></i><span>Friend Requests</span></div>
+        </aside>
+
+        <!-- Main Search Area -->
+        <main class="profile-main">
+            <div class="glass-search-container">
+                <h2>Discover Citizens</h2>
+                <div class="search-input-wrapper">
+                    <i class="ri-search-line search-icon"></i>
+                    <input type="text" id="big-user-search" placeholder="Search by name, typo-friendly..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="section-header" style="background: transparent; color: var(--nav-blue-dark); border-bottom: 2px dashed var(--border-color);">
+                <span>Suggested Citizens</span>
+            </div>
+            
+            <div id="discover-container" class="friends-list-container spring-grid">
+                <!-- Javascript will load the cards here -->
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html" class="active"><i class="ri-group-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-fill"></i></a>
+    </nav>
+
+</body>
+</html>
