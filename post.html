@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Post - Elmore Plus</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,6 +12,266 @@
     <script src="main.js"></script>
     <script type="module" src="post.js"></script>
     <script type="module" src="load.js"></script>
+
+    <style>
+        /* =========================================
+           SINGLE POST & COMMENTS UI
+           ========================================= */
+        .comments-container {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+        }
+
+        .comment-input-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed var(--bg-gray);
+            padding-bottom: 20px;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .comment-input-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            outline: none;
+            background: var(--bg-gray);
+            min-width: 0; /* Important for flex */
+        }
+
+        .comment-input-box input:focus {
+            background: white;
+            border-color: var(--nav-blue);
+        }
+
+        .comment-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+            box-sizing: border-box;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .comment-bubble {
+            background: var(--bg-gray);
+            padding: 10px 15px;
+            border-radius: 12px;
+            border-top-left-radius: 0;
+            flex: 1;
+            min-width: 0; /* Let flex shrink */
+            box-sizing: border-box;
+        }
+
+        .comment-bubble strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--nav-blue-dark);
+            margin-bottom: 3px;
+        }
+
+        .comment-bubble p {
+            font-size: 0.9rem;
+            margin: 0;
+            color: var(--text-dark);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        /* =========================================
+           LIKES MODAL STYLING
+           ========================================= */
+        .liker-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--bg-gray);
+            cursor: pointer;
+            transition: background 0.2s, padding-left 0.2s;
+            border-radius: 8px;
+        }
+
+        .liker-row:hover {
+            background: var(--primary-light-blue);
+            padding-left: 20px;
+        }
+
+        .liker-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .liker-name {
+            font-weight: bold;
+            color: var(--nav-blue-dark);
+            font-size: 1rem;
+        }
+
+        /* =========================================
+           BULLETPROOF MOBILE OVERFLOW FIX
+           ========================================= */
+        @media (max-width: 600px) {
+            body, html {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* 1. Disable the CSS Grid completely on mobile */
+            .container {
+                display: block !important; 
+                width: 100% !important;
+                padding: 15px 10px 80px 10px !important; 
+                margin: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .feed {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            /* 2. Force the post bubble to obey strict math constraints */
+            #single-post-container {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            #single-post-container .post {
+                display: flex !important;
+                width: 100% !important;
+                gap: 10px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            #single-post-container .post-avatar {
+                width: 45px !important;
+                height: 45px !important;
+                flex-shrink: 0 !important;
+            }
+
+            #single-post-container .post-bubble {
+                /* Screen width minus avatar width minus gap minus padding */
+                width: calc(100% - 55px) !important; 
+                flex: 1 1 auto !important; 
+                min-width: 0 !important; 
+                box-sizing: border-box !important;
+                padding: 12px !important;
+            }
+
+            #single-post-container .post-bubble p {
+                width: 100% !important;
+                margin: 0 !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                word-break: break-word !important;
+                white-space: pre-wrap !important;
+            }
+
+            /* 3. Strict Comments Container Constraints */
+            .comments-container {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 15px 0 0 0 !important;
+                padding: 15px 10px !important;
+                border-radius: 8px !important;
+                border-left: none !important;
+                border-right: none !important;
+            }
+
+            .comment-input-box {
+                display: flex !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                gap: 8px !important;
+                padding-bottom: 15px !important;
+            }
+
+            .comment-avatar {
+                width: 35px !important;
+                height: 35px !important;
+                flex-shrink: 0 !important;
+            }
+
+            .comment-input-box input {
+                width: calc(100% - 95px) !important; /* Math constraint */
+                flex: 1 !important; 
+                min-width: 0 !important; 
+                padding: 10px 12px !important;
+                font-size: 0.95rem !important;
+                box-sizing: border-box !important;
+            }
+            
+            #send-comment {
+                width: 42px !important;
+                height: 42px !important;
+                flex-shrink: 0 !important;
+                padding: 0 !important;
+                border-radius: 10px !important;
+            }
+
+            .comment-row {
+                display: flex !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                gap: 10px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .comment-bubble {
+                width: calc(100% - 45px) !important; /* Math constraint */
+                flex: 1 !important;
+                min-width: 0 !important;
+                padding: 10px 12px !important;
+                border-radius: 10px !important;
+                border-top-left-radius: 0 !important;
+                box-sizing: border-box !important;
+            }
+            
+            .comment-bubble p {
+                font-size: 0.85rem !important;
+                line-height: 1.4 !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                word-break: break-word !important;
+            }
+
+            /* Modal mobile fix */
+            #likes-modal .modal-content {
+                width: 95% !important;
+                border-radius: 12px !important;
+                box-sizing: border-box !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -28,9 +288,22 @@
         </div>
     </header>
 
-    <div class="container layout-grid" style="grid-template-columns: 1fr; max-width: 800px;">
+    <!-- Mobile Slide-Out Menu -->
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+        <div class="mobile-menu-header">
+            <h2>MENU</h2>
+            <i class="ri-close-line mobile-menu-trigger" style="font-size: 1.5rem; color: white; cursor: pointer;"></i>
+        </div>
+        <a href="index.html">HOME</a>
+        <a href="profile.html">MY ACCOUNT</a>
+        <a href="friends.html">FRIENDS</a>
+        <a href="#" class="logout-btn" style="color: #ff4d4d;">LOGOUT</a>
+    </div>
+
+    <!-- The container layout-grid is overridden to block on mobile by CSS -->
+    <div class="container layout-grid" style="grid-template-columns: 1fr; max-width: 800px; padding-bottom: 80px;">
         <main class="feed">
-            <button class="auth-btn" style="width: auto; background: var(--bg-gray); color: var(--nav-blue-dark); border: 2px solid var(--border-color);" onclick="window.history.back()">
+            <button class="auth-btn" style="width: auto; background: var(--bg-gray); color: var(--nav-blue-dark); border: 2px solid var(--border-color); margin-bottom: 10px;" onclick="window.history.back()">
                 <i class="ri-arrow-left-line"></i> Go Back
             </button>
 
@@ -44,7 +317,7 @@
                 <div class="comment-input-box">
                     <img src="https://placehold.co/40" id="my-comment-pic" class="comment-avatar">
                     <input type="text" id="comment-input" placeholder="Write a comment..." autocomplete="off">
-                    <button id="send-comment" class="auth-btn signup-btn" style="width: auto; padding: 0 20px; margin: 0; border-radius: 12px;">
+                    <button id="send-comment" class="auth-btn signup-btn" style="width: auto; height: 45px; padding: 0 20px; margin: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                         <i class="ri-send-plane-fill"></i>
                     </button>
                 </div>
@@ -55,6 +328,28 @@
             </div>
         </main>
     </div>
+
+    <!-- Liked By Modal -->
+    <div class="post-modal" id="likes-modal">
+        <div class="modal-content" style="max-height: 80vh; display: flex; flex-direction: column; width: 90%; max-width: 400px; padding: 0;">
+            <div class="modal-header" style="flex-shrink: 0; padding: 20px; border-bottom: 2px dashed var(--bg-gray); margin-bottom: 0;">
+                <h3 style="margin: 0;"><i class="fa-solid fa-thumbs-up" style="color: var(--nav-blue);"></i> Liked By</h3>
+                <button id="close-likes-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;"><i class="ri-close-line"></i></button>
+            </div>
+            
+            <div id="likes-list" style="overflow-y: auto; flex: 1; padding: 15px;">
+                <!-- JavaScript will inject the people who liked the post here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Bar -->
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html"><i class="ri-group-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-line"></i></a>
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
 
 </body>
 </html>
