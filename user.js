@@ -78,18 +78,28 @@ async function loadTargetUser() {
         document.getElementById("target-bio").textContent = "This account may have been deleted by Bobert.";
     }
 }
-
 async function checkFriendStatus() {
     const addBtn = document.getElementById("add-friend-btn");
+    const msgBtn = document.getElementById("message-btn"); // Grab the message button
+    
     if (!addBtn) return;
 
     const myDoc = await getDoc(doc(db, "users", currentUser.uid));
     const myFriends = myDoc.data().friends || [];
     
+    // Check if they are already friends
     if (myFriends.includes(targetUid)) {
         addBtn.innerHTML = `<i class="ri-user-follow-fill"></i> Friends`;
         addBtn.style.background = "var(--nav-blue-dark)";
         addBtn.disabled = true;
+        
+        // SHOW MESSAGE BUTTON & ADD CLICK EVENT
+        if (msgBtn) {
+            msgBtn.style.display = "flex"; // Unhide the button
+            msgBtn.onclick = () => {
+                window.location.href = `message.html?uid=${targetUid}`; // Redirect to chat
+            };
+        }
         return;
     }
 
@@ -141,6 +151,68 @@ async function checkFriendStatus() {
         }
     };
 }
+// async function checkFriendStatus() {
+//     const addBtn = document.getElementById("add-friend-btn");
+//     if (!addBtn) return;
+
+//     const myDoc = await getDoc(doc(db, "users", currentUser.uid));
+//     const myFriends = myDoc.data().friends || [];
+    
+//     if (myFriends.includes(targetUid)) {
+//         addBtn.innerHTML = `<i class="ri-user-follow-fill"></i> Friends`;
+//         addBtn.style.background = "var(--nav-blue-dark)";
+//         addBtn.disabled = true;
+//         return;
+//     }
+
+//     const qSent = query(
+//         collection(db, "friendRequests"), 
+//         where("senderUid", "==", currentUser.uid), 
+//         where("receiverUid", "==", targetUid)
+//     );
+//     const sentSnap = await getDocs(qSent);
+    
+//     if (!sentSnap.empty) {
+//         addBtn.innerHTML = `<i class="ri-time-line"></i> Request Sent`;
+//         addBtn.style.background = "#888";
+//         addBtn.disabled = true;
+//         return;
+//     }
+
+//     addBtn.onclick = async () => {
+//         addBtn.disabled = true;
+//         addBtn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Sending...`;
+        
+//         try {
+//             await addDoc(collection(db, "friendRequests"), {
+//                 senderUid: currentUser.uid,
+//                 receiverUid: targetUid,
+//                 senderName: currentUser.displayName,
+//                 senderPic: currentUser.photoURL,
+//                 status: "pending",
+//                 createdAt: serverTimestamp()
+//             });
+            
+//             await addDoc(collection(db, "notifications"), {
+//                 recipientUid: targetUid,
+//                 senderUid: currentUser.uid,
+//                 senderName: currentUser.displayName,
+//                 senderPic: currentUser.photoURL,
+//                 type: "friend_request",
+//                 text: "sent you a friend request.",
+//                 read: false,
+//                 createdAt: serverTimestamp()
+//             });
+
+//             addBtn.innerHTML = `<i class="ri-time-line"></i> Request Sent`;
+//             addBtn.style.background = "#888";
+//         } catch (error) {
+//             console.error("Failed to send request", error);
+//             addBtn.disabled = false;
+//             addBtn.innerHTML = `<i class="ri-user-add-line"></i> Try Again`;
+//         }
+//     };
+// }
 
 function startTargetFeed() {
     const feedContainer = document.getElementById("user-feed-container");
