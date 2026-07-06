@@ -2,12 +2,15 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import { doc, getDoc, collection, query, where, onSnapshot, updateDoc, arrayUnion, arrayRemove, serverTimestamp, addDoc, limit, getDocs, documentId } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { initFeed } from "./posts.js";
 
 // IMPORT YOUR GLOBAL GOOGLE DRIVE FIX
 import { getDirectImageUrl } from "./gdrive.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const targetUid = urlParams.get('uid');
+const userCache = {}; 
+const q = query(collection(db, "posts"), where("authorUid", "==", targetUid));
 
 if (!targetUid) {
     window.location.href = "index.html";
@@ -52,6 +55,7 @@ onAuthStateChanged(auth, async (user) => {
 
             hideLoader();
 
+initFeed(q, "user-feed-container", currentUser, userCache);
         } catch (error) {
             console.error("Error loading profile:", error);
             hideLoader();

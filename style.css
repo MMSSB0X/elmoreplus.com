@@ -168,7 +168,7 @@ body {
 }
 
 /* --- Floating Sidebars --- */
-.left-sidebar, .right-sidebar {
+/* .left-sidebar, .right-sidebar {
     background: white;
     border: none; 
     border-radius: 20px;
@@ -179,12 +179,23 @@ body {
     margin-bottom: 20px;
 
 
-        /* NEW: Sticky Header Rules */
     position: sticky;
     top: 0;
-    z-index: 100; /* Keeps it above posts, sidebars, and dropdowns */
-}
+    z-index: 100; 
+} */
+.left-sidebar, .right-sidebar {
+    /* Your existing styles (background, border-radius, padding, etc.) stay here */
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
 
+    /* NEW: Sticky Rules */
+    position: sticky;
+    top: 80px; /* Adjust this number to match the height of your top navigation bar */
+    height: fit-content; /* CRITICAL: Sticky won't work without this! */
+    z-index: 100; /* Ensures the sidebars stay above background elements */
+}
 .username {
     color: var(--nav-blue-dark);
     font-size: 0.9rem;
@@ -1936,4 +1947,160 @@ background-color: var(--primary-light-blue);
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   POST ACTIONS (LIKE & COMMENT STACK)
+   ========================================= */
+.post-actions-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.comment-section {
+    background: var(--primary-blue);
+    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--nav-blue);
+    transition: background-color 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+
+.comment-section:hover {
+    background: var(--nav-blue);
+    transform: scale(1.05);
+}
+
+.comment-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Let the parent div handle the click */
+}
+
+/* =========================================
+   SINGLE POST & COMMENTS UI
+   ========================================= */
+.comments-container {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.comment-input-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed var(--bg-gray);
+    padding-bottom: 20px;
+}
+
+.comment-input-box input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 20px;
+    outline: none;
+    background: var(--bg-gray);
+}
+
+.comment-input-box input:focus {
+    background: white;
+    border-color: var(--nav-blue);
+}
+
+.comment-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+}
+
+.comment-bubble {
+    background: var(--bg-gray);
+    padding: 10px 15px;
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    max-width: 100%;
+}
+
+.comment-bubble strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--nav-blue-dark);
+    margin-bottom: 3px;
+}
+
+.comment-bubble p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--text-dark);
+    word-wrap: break-word;
 }

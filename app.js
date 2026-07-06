@@ -252,6 +252,9 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import { doc, getDoc, getDocs, collection, addDoc, onSnapshot, query, where, orderBy, limit, serverTimestamp, updateDoc, arrayUnion, arrayRemove, deleteDoc, documentId } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { initFeed } from "./posts.js";
+// import { collection, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
 
 // Import your global Google Drive link cleaner!
 import { getDirectImageUrl } from "./gdrive.js";
@@ -287,6 +290,9 @@ onAuthStateChanged(auth, async (user) => {
                 
                 // Start listening for posts
                 startFeedListener();
+                // Inside onAuthStateChanged where startFeedListener() used to be:
+const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+initFeed(q, "feed-container", currentUser, userCache);
             }
             loadSidebarFriends(); 
         } catch (error) { 

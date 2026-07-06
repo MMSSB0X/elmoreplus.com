@@ -113,16 +113,150 @@
         bottom: 130%; 
     }
 }
+.left-sidebar, .right-sidebar {
+    /* Your existing styles (background, border-radius, padding, etc.) stay here */
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+
+    /* NEW: Sticky Rules */
+    position: sticky;
+    top: 80px; /* Adjust this number to match the height of your top navigation bar */
+    height: fit-content; /* CRITICAL: Sticky won't work without this! */
+    z-index: 100; /* Ensures the sidebars stay above background elements */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --banner-bg: linear-gradient(135deg, #4da6ff 0%, #2d89ef 100%);
+    --text-color: #ffffff;
+    --accent-color: #ffd700;
+}
+
+/* .modern-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--banner-bg);
+    color: var(--text-color);
+    padding: 12px 24px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease-in-out;
+    z-index: 1000;
+} */
+.modern-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--banner-bg);
+    color: var(--text-color);
+    padding: 12px 24px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+    
+    /* Core Sticky Changes */
+    position: relative;            /* Sticks the banner in place relative to the viewport */
+    top: 0px;                     /* Locks it right at the top */
+    left: 0;
+    width: 100%;
+    
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease-in-out;
+    z-index: 9999;              /* High z-index ensures it stays above all other site elements */
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto;
+}
+
+.banner-cta {
+    background-color: var(--accent-color);
+    color: #333;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.banner-close {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.banner-close:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
     </style>
 </head>
 <body>
+
 <div id="site-loader">
         <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
         <div class="spinner-circle"></div>
         <p class="loading-text">CONNECTING TO ELMORE...</p>
     </div>
 
+<div class="modern-banner" id="promoBanner">
+    <div class="banner-content">
+        <span class="banner-icon">🚧</span>
+        <p><strong>Elmore Plus</strong> is still under development </p>
+                <span class="banner-icon">🚧</span>
+
+        <!-- <a href="#" class="banner-cta">Claim Offer</a> -->
+    </div>
+    <!-- <button class="banner-close" aria-label="Close banner" onclick="dismissBanner()">
+        <svg xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button> -->
+</div>
 <header class="top-bar nav-center">
+    
     <div class="header-content">
         <div class="logo-area">
             <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
@@ -297,8 +431,26 @@
     </div>
 </div>
 
-    <script>
+    <!-- <script>
+function dismissBanner() {
+    const banner = document.getElementById('promoBanner');
+    
+    // Step 1: Fade out
+    banner.style.opacity = '0';
+    banner.style.padding = '0 24px'; // Remove padding to prevent jarring jump
+    
+    // Step 2: Collapse height after fade animation completes
+    setTimeout(() => {
+        banner.style.height = '0';
+        banner.style.border = 'none'; // Clean up any borders
+    }, 400);
 
-    </script>
+    // Step 3: Remove from DOM completely 
+    setTimeout(() => {
+        banner.remove();
+    }, 800);
+}
+
+    </script> -->
 </body>
 </html>
