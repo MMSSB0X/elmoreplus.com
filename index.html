@@ -141,6 +141,98 @@
 
 
 
+/* Banner Core Layout */
+.top-banner {
+  background: linear-gradient(135deg, #3b82f6, #3b82f6); /* Modern dark slate gradient */
+  color: #f8fafc;
+  padding: 12px 24px;
+  position: relative;
+  z-index: 1000;
+  border-bottom: 1px solid #334155;
+  display: block; /* Ensures visibility on desktop screen sizes */
+}
+
+.banner-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  padding-right: 24px; /* Leaves space so text doesn't overlap the close icon */
+}
+
+/* Decorative Badge */
+.banner-badge {
+  background-color: #ff4d4d; /* Modern electric blue vibrant color */
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+/* Typography */
+.banner-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: white;
+  font-weight: 700;
+}
+
+/* Action Button Style Configuration */
+.banner-btn {
+  background-color: #ffffff;
+  color: #0f172a;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.banner-btn:hover {
+  background-color: #f1f5f9;
+}
+
+/* Close Button Icon */
+.banner-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 22px;
+  cursor: pointer;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.banner-close:hover {
+  color: #ffffff;
+}
+
+/* Media Query: Completely hides the top banner on mobile devices */
+@media (max-width: 768px) {
+  .top-banner {
+    display: none !important;
+  }
+}
+
+
 
 
 
@@ -156,18 +248,22 @@
         <p class="loading-text">CONNECTING TO ELMORE...</p>
     </div>
 
-<!-- <div class="modern-banner" id="promoBanner">
+<div class="top-banner" id="announcementBanner">
+  <div class="banner-container">
     <div class="banner-content">
-        <span class="banner-icon">🚧</span>
-        <p><strong>Elmore Plus</strong> is still under development </p>
-                <span class="banner-icon">🚧</span>
-
-        <a href="#" class="banner-cta">Claim Offer</a>
+      <span class="banner-badge">Notice</span>
+      <p class="banner-text">
+       🚧 Elmore Plus is under development 🚧
+      </p>
+      <!-- Uncomment the button below when you are ready to use a CTA link -->
+      <!-- <a href="#" class="banner-btn">Learn More</a> -->
     </div>
-    <button class="banner-close" aria-label="Close banner" onclick="dismissBanner()">
-        <svg xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
-</div> -->
+    <!-- <button class="banner-close" onclick="document.getElementById('announcementBanner').style.display='none'" aria-label="Close banner">
+      &times;
+    </button> -->
+  </div>
+</div>
+
 <header class="top-bar nav-center">
     
     <div class="header-content">
