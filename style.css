@@ -971,7 +971,7 @@ body {
     width: 250px;
     height: 100vh;
     background: var(--nav-blue-dark);
-    z-index: 2000;
+    z-index: 10000;
     transition: right 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
