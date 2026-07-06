@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>About Us - Elmore Plus</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="main.js"></script>
+    <script type="module" src="load.js"></script>
+
+    <style>
+        /* =========================================
+           ABOUT PAGE STYLING & ANIMATIONS
+           ========================================= */
+        body {
+            background: linear-gradient(135deg, var(--bg-gray) 0%, var(--primary-light-blue) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            animation: fadeInDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .about-hero h1 {
+            color: var(--nav-blue-dark);
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .about-hero p {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Glass Panels for Content */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: springUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        /* Epic Quote Section */
+        .quote-box {
+            text-align: center;
+            padding: 20px;
+            border-left: 5px solid var(--nav-blue);
+            border-right: 5px solid var(--nav-blue);
+            background: linear-gradient(90deg, rgba(45,137,239,0.05) 0%, rgba(45,137,239,0.1) 50%, rgba(45,137,239,0.05) 100%);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .quote-box i {
+            font-size: 3rem;
+            color: var(--nav-blue);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .quote-box h2 {
+            font-size: 1.8rem;
+            color: var(--nav-blue-dark);
+            font-style: italic;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-box p {
+            font-weight: bold;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Lore Section (Gumball & Elmore) */
+        .lore-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .lore-text h3 {
+            color: var(--nav-blue-dark);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .lore-text p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .lore-image {
+            width: 100%;
+            border-radius: 20px;
+            border: 4px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: rotate(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .lore-image:hover {
+            transform: rotate(-2deg) scale(1.02);
+        }
+
+        /* Creator Cards Grid */
+        .creators-title {
+            text-align: center;
+            color: var(--nav-blue-dark);
+            font-size: 2.5rem;
+            margin: 60px 0 30px;
+            text-transform: uppercase;
+        }
+
+        .creators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 80px 20px;
+        }
+
+        .creator-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid white;
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+
+        .creator-card.lead {
+            border: 2px solid var(--nav-blue);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(233, 244, 255, 0.8));
+            transform: scale(1.05); /* Make MMS stand out */
+        }
+
+        .creator-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .creator-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .creator-card:hover .creator-avatar {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .creator-name {
+            color: var(--nav-blue-dark);
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .creator-role {
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .creator-bio {
+            color: #444;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 0 15px;
+        }
+
+        /* Animations */
+        @keyframes springUp {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           STRICT MOBILE RESPONSIVENESS
+           ========================================= */
+        @media (max-width: 800px) {
+            .lore-grid {
+                grid-template-columns: 1fr; /* Stack lore section on tablets/phones */
+            }
+            .lore-image {
+                max-width: 80%;
+                margin: 0 auto;
+                display: block;
+            }
+            .creator-card.lead {
+                transform: scale(1); /* Remove zoom on mobile to prevent overflow */
+            }
+        }
+
+        @media (max-width: 600px) {
+            body, html {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .about-hero {
+                padding: 40px 15px 20px;
+            }
+
+            .about-hero h1 { font-size: 2.2rem; }
+            .about-hero p { font-size: 1rem; }
+
+            .glass-panel {
+                padding: 25px 15px;
+                margin: 0 15px 30px 15px;
+                border-radius: 16px;
+            }
+
+            .quote-box h2 { font-size: 1.4rem; }
+            .lore-text h3 { font-size: 1.5rem; text-align: center; }
+            .lore-image { max-width: 100%; transform: rotate(0); }
+
+            .creators-title { font-size: 2rem; margin: 30px 0 20px; }
+            
+            .creators-grid { 
+                grid-template-columns: 1fr; 
+                gap: 25px; 
+                padding: 0 15px 100px 15px; /* Leave space for bottom nav */
+            }
+
+            .creator-card { padding: 30px 15px; }
+            .creator-name { font-size: 1.8rem; }
+            .creator-bio { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html">FRIENDS</a>
+                <a href="about.html" class="active">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Slide-Out Menu -->
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+        <div class="mobile-menu-header">
+            <h2>MENU</h2>
+            <i class="ri-close-line mobile-menu-trigger" style="font-size: 1.5rem; color: white; cursor: pointer;"></i>
+        </div>
+        <a href="index.html">HOME</a>
+        <a href="profile.html">MY ACCOUNT</a>
+        <a href="friends.html">FRIENDS</a>
+        <a href="about.html">ABOUT</a>
+        <a href="#" class="logout-btn" style="color: #ff4d4d;">LOGOUT</a>
+    </div>
+
+    <!-- Hero Area -->
+    <div class="about-hero">
+        <h1>Welcome to Elmore Plus</h1>
+        <p>The only social network brave enough to host the bizarre, glitchy, and completely chaotic citizens of Elmore.</p>
+    </div>
+
+    <!-- Lore & Quote Panel -->
+    <div class="glass-panel" style="animation-delay: 0.1s;">
+        <div class="quote-box">
+            <i class="ri-double-quotes-l"></i>
+            <h2>"The internet might be a terrifying wasteland of cats and arguments, but Elmore Plus is OUR terrifying wasteland!"</h2>
+            <p>— Gumball Tristopher Watterson</p>
+        </div>
+
+        <div class="lore-grid">
+            <div class="lore-text">
+                <h3>What is Elmore Plus?</h3>
+                <p>Born from the chaotic halls of Elmore Junior High, Elmore Plus was built because standard social networks simply couldn't handle the weirdness of our town. Whether you are a blue cat, a walking balloon, or an 8-bit cloud, this is your home.</p>
+                <p>We believe in a completely unfiltered experience. No Bobert-controlled algorithms, no Joy virus infections, and definitely no limits on how many times Richard can post pictures of his sausages. It's fast, it's secure, and it's 100% Elmore.</p>
+            </div>
+            <!-- Feel free to replace this image URL with an actual picture of Gumball from your project folder! -->
+            <img src="https://placehold.co/400x300/2d89ef/FFF?text=The+Amazing+World+of+Gumball" alt="Gumball" class="lore-image">
+        </div>
+    </div>
+
+    <h2 class="creators-title">Meet The Minds</h2>
+
+    <!-- Creators Grid -->
+    <div class="creators-grid">
+        
+        <!-- Creator 1: MMS (Featured as Lead) -->
+        <div class="creator-card lead" style="animation-delay: 0.2s;">
+            <img src="images/eren yeager.jpeg" alt="MMS" class="creator-avatar">
+            <!-- <img src="https://placehold.co/150/1b66c9/FFF?text=MMS" alt="MMS" class="creator-avatar"> -->
+            <h3 class="creator-name">MMS</h3>
+            <div class="creator-role">The Creator & Lead Developer</div>
+            <p class="creator-bio">The absolute mastermind behind Elmore Plus. MMS built the entire foundation of this network from the ground up. Combining flawless software development with cutting-edge UI/UX design, MMS crafted a platform fast enough to keep up with Gumball's terrible ideas and secure enough to keep Bobert out.</p>
+        </div>
+
+        <!-- Creator 2: MO -->
+        <div class="creator-card" style="animation-delay: 0.4s;">
+            <img src="images/mo.jpg" alt="MO" class="creator-avatar">
+            <!-- <img src="https://placehold.co/150/32b35a/FFF?text=MO" alt="MO" class="creator-avatar"> -->
+            <h3 class="creator-name">MO</h3>
+            <div class="creator-role">Co-Creator</div>
+            <p class="creator-bio">The visionary partner. MO helped brainstorm the aesthetic and direction of Elmore Plus, ensuring that the platform captures the true spirit of the town. Together with MMS, they forged a digital landscape where every citizen of Elmore can belong.</p>
+        </div>
+
+    </div>
+
+    <!-- Mobile Bottom Bar -->
+    <nav class="mobile-bottom-bar">
+        <a href="index.html"><i class="ri-home-5-fill"></i></a>
+        <a href="friends.html"><i class="ri-group-fill"></i></a>
+        <a href="profile.html"><i class="ri-user-smile-line"></i></a>
+        <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
+    </nav>
+
+</body>
+</html>
