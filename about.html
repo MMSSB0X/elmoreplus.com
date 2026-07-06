@@ -295,6 +295,11 @@
             </nav>
         </div>
     </header> -->
+    <div id="site-loader">
+        <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
+        <div class="spinner-circle"></div>
+        <p class="loading-text">Loading Story...</p>
+    </div>
 <header class="top-bar nav-center">
     
     <div class="header-content">
@@ -335,6 +340,13 @@
         </div>
     </div>
 </header>
+<div class="mobile-search-dropdown" id="mobile-search-box">
+    <div style="display: flex; width: 100%; gap: 10px;">
+        <input type="text" id="search-mobile" placeholder="Search Elmore..." autocomplete="off">
+        <button><i class="ri-search-line"></i></button>
+    </div>
+    <div id="search-results-mobile" class="search-dropdown hidden"></div>
+</div>
     <!-- Mobile Slide-Out Menu -->
     <div class="mobile-nav-menu" id="mobile-nav-menu">
         <div class="mobile-menu-header">
@@ -401,10 +413,11 @@
     </div>
 
     <!-- Mobile Bottom Bar -->
-    <nav class="mobile-bottom-bar">
-        <a href="index.html"><i class="ri-home-5-fill"></i></a>
-        <a href="friends.html"><i class="ri-group-fill"></i></a>
+ <nav class="mobile-bottom-bar">
+        <a href="index.html" ><i class="ri-home-5-line"></i></a>
+        <a href="#" id="mobile-search-trigger"><i class="ri-search-line"></i></a>
         <a href="profile.html"><i class="ri-user-smile-line"></i></a>
+        
         <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
     </nav>
 

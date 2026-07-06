@@ -1574,7 +1574,8 @@ background-color: var(--primary-light-blue);
     position: absolute;
     top: 92%; /* Placed directly below the search bar */
     left: 0;
-    width: 100%;
+    /* width: 100%; */
+    width: 200px;
     background: white;
     border: 2px solid var(--border-color);
     border-radius: 8px;
