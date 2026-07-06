@@ -9,8 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
-    <script src="main.js"></script>
     <script type="module" src="load.js"></script>
+        <script src="main.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="payload.js"></script>
+    <script type="module" src="search.js"></script>
+    <script type="module" src="noti.js"></script>
 
     <style>
         /* =========================================
@@ -278,7 +282,7 @@
 </head>
 <body>
 
-    <header class="top-bar nav-center">
+    <!-- <header class="top-bar nav-center">
         <div class="header-content">
             <div class="logo-area">
                 <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
@@ -290,8 +294,47 @@
                 <a href="about.html" class="active">ABOUT</a>
             </nav>
         </div>
-    </header>
+    </header> -->
+<header class="top-bar nav-center">
+    
+    <div class="header-content">
+        <div class="logo-area">
+            <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="index.html" >HOME</a>
+            <a href="profile.html">MY ACCOUNT</a>
+            <a href="friends.html">FRIENDS</a>
+            <a href="about.html" class="active">ABOUT</a>
+            <a href="#" class="logout-btn">LOGOUT</a>
+        </nav>
+        
+        <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+            
+            <div class="search-bar" style="position: relative;">
+                <label for="search-desktop"></label>
+                <input type="text" id="search-desktop" autocomplete="on" placeholder="Search Elmore...">
+                <div id="search-results-desktop" class="search-dropdown hidden"></div>
+            </div>
 
+            <div class="noti-wrapper" id="header-noti-wrapper">
+                <a href="#" id="header-noti-btn" style="position: relative; color: white; font-size: 1.5rem; text-decoration: none;">
+                    <i class="ri-notification-3-fill"></i>
+                    <span class="noti-badge hidden" id="header-noti-badge">0</span>
+                </a>
+                
+                <div class="noti-dropdown hidden" id="header-noti-dropdown">
+                    <div class="noti-header">Notifications</div>
+                    <div id="header-noti-list">
+                        <p style="padding: 15px; color: #888; text-align: center; font-size: 0.8rem;">No new notifications</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
     <!-- Mobile Slide-Out Menu -->
     <div class="mobile-nav-menu" id="mobile-nav-menu">
         <div class="mobile-menu-header">
