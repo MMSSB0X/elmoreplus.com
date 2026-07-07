@@ -33,6 +33,62 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// =========================================
+// FLOATING SCROLL TO TOP BUTTON
+// =========================================
+
+(function() {
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    if (!scrollBtn) return;
+
+    // Show/hide button based on scroll position
+    function toggleScrollButton() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const threshold = 300; // Show after scrolling 300px
+
+        if (scrollY > threshold) {
+            scrollBtn.classList.add('visible');
+        } else {
+            scrollBtn.classList.remove('visible');
+        }
+    }
+
+    // Smooth scroll to top when clicked
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Attach events
+    window.addEventListener('scroll', toggleScrollButton, { passive: true });
+    scrollBtn.addEventListener('click', scrollToTop);
+
+    // Check initial state
+    toggleScrollButton();
+})();
+
+
+
+
+
+
+
+
+
     // 3. Add Post Modal Toggle
     const modal = document.getElementById("post-modal");
     const openModalBtn = document.getElementById("open-post-modal");
@@ -50,3 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+
+
+
+
+
+
+
+
