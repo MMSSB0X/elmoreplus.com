@@ -1,13 +1,14 @@
 // auth.js
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+// WE ADDED collection, query, where, and getDocs to check the database!
+import { doc, setDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 import { auth, db } from "./firebase.js";
 
 // --- FUNNY ERROR TRANSLATOR ---
 function getFunnyErrorMessage(errorCode) {
     switch (errorCode) {
         case 'auth/email-already-in-use':
-            return "Dude, you already have an account. Stop trying to clone yourself.";
+            return "Too late! Tobias (or someone else) already took that Elmore Account name. Try another one!";
         case 'auth/invalid-credential':
         case 'auth/wrong-password':
             return "Wrong! Are you sure you even go to Elmore Junior High?";
@@ -18,7 +19,8 @@ function getFunnyErrorMessage(errorCode) {
         case 'auth/too-many-requests':
             return "Whoa, slow down! You're clicking faster than Richard running to a buffet. Try again later.";
         default:
-            return "Something broke. Probably Gumball's fault. Try again.";
+            return "Whoa there, copycat! That Display Name is already taken. Are you trying to pull a Zach? Pick a new one.";
+            // return "Something broke. Probably Gumball's fault. Try again.";
     }
 }
 
@@ -51,27 +53,48 @@ if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const name = document.getElementById('signup-name').value; // Get the Name!
-        const email = document.getElementById('signup-email').value;
+        const name = document.getElementById('signup-name').value.trim();
+        
+        // Grab the username and automatically append the domain
+        const rawUsername = document.getElementById('signup-username').value.trim();
+        const email = rawUsername.includes('@') ? rawUsername : `${rawUsername}@elmore.com`;
+        
         const password = document.getElementById('signup-password').value;
         const errorMessage = document.getElementById('signup-error');
         const submitBtn = document.getElementById('signup-btn-submit');
 
-        submitBtn.textContent = "Asking Mr. Small for permission..."; // Funny loading state
+        submitBtn.textContent = "Asking Mr. Small for permission..."; 
         submitBtn.disabled = true;
 
         try {
+            // --- NEW: DISPLAY NAME PROTECTION ---
+            // 1. Look in the "users" database
+            const usersRef = collection(db, "users");
+            // 2. Check if a lowercase version of this name already exists
+            const q = query(usersRef, where("usernameLower", "==", name.toLowerCase()));
+            const querySnapshot = await getDocs(q);
+
+            // 3. If we found someone with this name, STOP the sign up!
+            if (!querySnapshot.empty) {
+                errorMessage.textContent = "Identity theft is not a joke! That Display Name is already taken.";
+                errorMessage.style.display = "block";
+                submitBtn.textContent = "CREATE ACCOUNT";
+                submitBtn.disabled = false;
+                return; // Stop the code right here
+            }
+            // --- END OF PROTECTION ---
+
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Save the custom Name instead of the email prefix!
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 email: user.email,
-                username: name, // Using their provided name
+                username: name, 
+                // We save a lowercase version to make our protection check bulletproof
+                usernameLower: name.toLowerCase(), 
                 bio: "I survived Elmore Junior High today.",
                 profilePic: `images/user.png`,
-                // profilePic: `https://placehold.co/150x150/87CEEB/FFF?text=${name.charAt(0).toUpperCase()}`,
                 friends: [],
                 role: "user",
                 createdAt: serverTimestamp()
@@ -95,7 +118,10 @@ if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const email = document.getElementById('login-email').value;
+        // Grab the username and automatically append the domain
+        const rawUsername = document.getElementById('login-username').value.trim();
+        const email = rawUsername.includes('@') ? rawUsername : `${rawUsername}@elmore.com`;
+        
         const password = document.getElementById('login-password').value;
         const errorMessage = document.getElementById('login-error');
         const submitBtn = loginForm.querySelector('button[type="submit"]');

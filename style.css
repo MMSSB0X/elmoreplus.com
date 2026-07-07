@@ -2077,3 +2077,56 @@ background-color: var(--primary-light-blue);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Inline Domain Input (Microsoft Style) --- */
+.domain-input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+    transition: border-color 0.2s;
+}
+
+/* Highlights the whole box when the user clicks the input */
+.domain-input-wrapper:focus-within {
+    border-color: var(--primary-blue);
+}
+
+.domain-input-wrapper input {
+    flex: 1;
+    border: none !important; /* Removes the inner border */
+    outline: none;
+    padding: 10px;
+    font-size: 1rem;
+    background: transparent;
+    min-width: 0; /* Prevents flexbox breaking on small screens */
+}
+
+.domain-suffix {
+    padding: 10px 15px 10px 0;
+    color: var(--nav-blue-dark);
+    font-weight: bold;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    user-select: none;
+}
