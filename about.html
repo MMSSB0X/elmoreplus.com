@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
     
     <script type="module" src="load.js"></script>
-        <script src="main.js"></script>
+    <script src="main.js"></script>
     <script type="module" src="app.js"></script>
     <script type="module" src="payload.js"></script>
     <script type="module" src="search.js"></script>
@@ -18,12 +18,22 @@
 
     <style>
         /* =========================================
+           HEADER STICKY FIX
+           ========================================= */
+        .top-bar {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 2000 !important; /* Keeps it above everything else */
+        }
+
+        /* =========================================
            ABOUT PAGE STYLING & ANIMATIONS
            ========================================= */
         body {
             background: linear-gradient(135deg, var(--bg-gray) 0%, var(--primary-light-blue) 100%);
             min-height: 100vh;
-            overflow-x: hidden;
+            /* CRITICAL FIX: Use 'clip' instead of 'hidden' so sticky header works! */
+            overflow-x: clip; 
         }
 
         /* Hero Section */
@@ -168,7 +178,7 @@
         .creator-card.lead {
             border: 2px solid var(--nav-blue);
             background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(233, 244, 255, 0.8));
-            transform: scale(1.05); /* Make MMS stand out */
+            transform: scale(1.05);
         }
 
         .creator-card:hover {
@@ -229,7 +239,7 @@
            ========================================= */
         @media (max-width: 800px) {
             .lore-grid {
-                grid-template-columns: 1fr; /* Stack lore section on tablets/phones */
+                grid-template-columns: 1fr;
             }
             .lore-image {
                 max-width: 80%;
@@ -237,13 +247,14 @@
                 display: block;
             }
             .creator-card.lead {
-                transform: scale(1); /* Remove zoom on mobile to prevent overflow */
+                transform: scale(1);
             }
         }
 
         @media (max-width: 600px) {
             body, html {
-                overflow-x: hidden !important;
+                /* CRITICAL FIX: Use 'clip' instead of 'hidden' */
+                overflow-x: clip !important; 
                 width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
@@ -271,7 +282,7 @@
             .creators-grid { 
                 grid-template-columns: 1fr; 
                 gap: 25px; 
-                padding: 0 15px 100px 15px; /* Leave space for bottom nav */
+                padding: 0 15px 100px 15px; 
             }
 
             .creator-card { padding: 30px 15px; }
@@ -282,71 +293,60 @@
 </head>
 <body>
 
-    <!-- <header class="top-bar nav-center">
-        <div class="header-content">
-            <div class="logo-area">
-                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
-            </div>
-            <nav class="main-nav">
-                <a href="index.html">HOME</a>
-                <a href="profile.html">MY ACCOUNT</a>
-                <a href="friends.html">FRIENDS</a>
-                <a href="about.html" class="active">ABOUT</a>
-            </nav>
-        </div>
-    </header> -->
     <div id="site-loader">
         <img src="images/elmore.png" class="loader-logo" alt="Elmore Plus">
         <div class="spinner-circle"></div>
         <p class="loading-text">Loading Story...</p>
     </div>
-<header class="top-bar nav-center">
-    
-    <div class="header-content">
-        <div class="logo-area">
-            <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
-        </div>
-        
-        <nav class="main-nav">
-            <a href="index.html" >HOME</a>
-            <a href="profile.html">MY ACCOUNT</a>
-            <a href="friends.html">FRIENDS</a>
-            <a href="about.html" class="active">ABOUT</a>
-            <a href="#" class="logout-btn">LOGOUT</a>
-        </nav>
-        
-        <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
-            
-            <div class="search-bar" style="position: relative;">
-                <label for="search-desktop"></label>
-                <input type="text" id="search-desktop" autocomplete="on" placeholder="Search Elmore...">
-                <div id="search-results-desktop" class="search-dropdown hidden"></div>
-            </div>
 
-            <div class="noti-wrapper" id="header-noti-wrapper">
-                <a href="#" id="header-noti-btn" style="position: relative; color: white; font-size: 1.5rem; text-decoration: none;">
-                    <i class="ri-notification-3-fill"></i>
-                    <span class="noti-badge hidden" id="header-noti-badge">0</span>
-                </a>
-                
-                <div class="noti-dropdown hidden" id="header-noti-dropdown">
-                    <div class="noti-header">Notifications</div>
-                    <div id="header-noti-list">
-                        <p style="padding: 15px; color: #888; text-align: center; font-size: 0.8rem;">No new notifications</p>
+    <!-- Top Navigation Bar -->
+    <header class="top-bar nav-center">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.html"><img src="images/elmore-plus.png" class="logo-img" alt="Elmore Plus"></a>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html">HOME</a>
+                <a href="profile.html">MY ACCOUNT</a>
+                <a href="friends.html">FRIENDS</a>
+                <a href="about.html" class="active">ABOUT</a>
+                <a href="#" class="logout-btn">LOGOUT</a>
+            </nav>
+            
+            <div class="header-actions" style="display: flex; align-items: center; gap: 15px;">
+                <div class="search-bar" style="position: relative;">
+                    <label for="search-desktop"></label>
+                    <input type="text" id="search-desktop" autocomplete="on" placeholder="Search Elmore...">
+                    <div id="search-results-desktop" class="search-dropdown hidden"></div>
+                </div>
+
+                <div class="noti-wrapper" id="header-noti-wrapper">
+                    <a href="#" id="header-noti-btn" style="position: relative; color: white; font-size: 1.5rem; text-decoration: none;">
+                        <i class="ri-notification-3-fill"></i>
+                        <span class="noti-badge hidden" id="header-noti-badge">0</span>
+                    </a>
+                    
+                    <div class="noti-dropdown hidden" id="header-noti-dropdown">
+                        <div class="noti-header">Notifications</div>
+                        <div id="header-noti-list">
+                            <p style="padding: 15px; color: #888; text-align: center; font-size: 0.8rem;">No new notifications</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
+    </header>
+
+    <!-- Mobile Search Dropdown -->
+    <div class="mobile-search-dropdown" id="mobile-search-box">
+        <div style="display: flex; width: 100%; gap: 10px;">
+            <input type="text" id="search-mobile" placeholder="Search Elmore..." autocomplete="off">
+            <button><i class="ri-search-line"></i></button>
+        </div>
+        <div id="search-results-mobile" class="search-dropdown hidden"></div>
     </div>
-</header>
-<div class="mobile-search-dropdown" id="mobile-search-box">
-    <div style="display: flex; width: 100%; gap: 10px;">
-        <input type="text" id="search-mobile" placeholder="Search Elmore..." autocomplete="off">
-        <button><i class="ri-search-line"></i></button>
-    </div>
-    <div id="search-results-mobile" class="search-dropdown hidden"></div>
-</div>
+
     <!-- Mobile Slide-Out Menu -->
     <div class="mobile-nav-menu" id="mobile-nav-menu">
         <div class="mobile-menu-header">
@@ -380,9 +380,7 @@
                 <p>Born from the chaotic halls of Elmore Junior High, Elmore Plus was built because standard social networks simply couldn't handle the weirdness of our town. Whether you are a blue cat, a walking balloon, or an 8-bit cloud, this is your home.</p>
                 <p>We believe in a completely unfiltered experience. No Bobert-controlled algorithms, no Joy virus infections, and definitely no limits on how many times Richard can post pictures of his sausages. It's fast, it's secure, and it's 100% Elmore.</p>
             </div>
-            <!-- Feel free to replace this image URL with an actual picture of Gumball from your project folder! -->
-            <img src="https://static.wikia.nocookie.net/theamazingworldofgumball/images/3/3a/GumballIV.jpg/revision/latest?cb=20160112055432" alt="Gumball" class="lore-image">
-            <!-- <img src="https://placehold.co/400x300/2d89ef/FFF?text=The+Amazing+World+of+Gumball" alt="Gumball" class="lore-image"> -->
+            <img src="https://static.wikia.nocookie.net/theamazingworldofgumball/images/3/3a/GumballIV.jpg/revision/latest?cb=20160112055432" alt="Gumball" class="lore-image" onerror="this.src='https://placehold.co/400x300/2d89ef/FFF?text=The+Amazing+World+of+Gumball'">
         </div>
     </div>
 
@@ -391,11 +389,9 @@
     <!-- Creators Grid -->
     <div class="creators-grid">
         
-        <!-- Creator 1: MMS (Featured as Lead) -->
-        <!-- <div class="creator-card lead" style="animation-delay: 0.2s;"> -->
-        <div class="creator-card" style="animation-delay: 0.4s;">
-            <img src="images/Eren Yeager.png" alt="MMS" class="creator-avatar">
-            <!-- <img src="https://placehold.co/150/1b66c9/FFF?text=MMS" alt="MMS" class="creator-avatar"> -->
+        <!-- Creator 1: MMS -->
+        <div class="creator-card lead" style="animation-delay: 0.2s;">
+            <img src="images/Eren Yeager.png" alt="MMS" class="creator-avatar" onerror="this.src='https://placehold.co/150/1b66c9/FFF?text=MMS'">
             <h3 class="creator-name">MMS</h3>
             <div class="creator-role">The Creator & Lead Developer</div>
             <p class="creator-bio">The absolute mastermind behind Elmore Plus. MMS built the entire foundation of this network from the ground up. Combining flawless software development with cutting-edge UI/UX design, MMS crafted a platform fast enough to keep up with Gumball's terrible ideas and secure enough to keep Bobert out.</p>
@@ -403,8 +399,7 @@
 
         <!-- Creator 2: MO -->
         <div class="creator-card" style="animation-delay: 0.4s;">
-            <img src="images/mo.jpg" alt="MO" class="creator-avatar">
-            <!-- <img src="https://placehold.co/150/32b35a/FFF?text=MO" alt="MO" class="creator-avatar"> -->
+            <img src="images/mo.jpg" alt="MO" class="creator-avatar" onerror="this.src='https://placehold.co/150/32b35a/FFF?text=MO'">
             <h3 class="creator-name">MO</h3>
             <div class="creator-role">Co-Creator</div>
             <p class="creator-bio">The visionary partner. MO helped brainstorm the aesthetic and direction of Elmore Plus, ensuring that the platform captures the true spirit of the town. Together with MMS, they forged a digital landscape where every citizen of Elmore can belong.</p>
@@ -413,11 +408,10 @@
     </div>
 
     <!-- Mobile Bottom Bar -->
- <nav class="mobile-bottom-bar">
+    <nav class="mobile-bottom-bar">
         <a href="index.html" ><i class="ri-home-5-line"></i></a>
         <a href="#" id="mobile-search-trigger"><i class="ri-search-line"></i></a>
         <a href="profile.html"><i class="ri-user-smile-line"></i></a>
-        
         <a href="#" class="mobile-menu-trigger"><i class="ri-menu-line"></i></a>
     </nav>
 
